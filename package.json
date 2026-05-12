@@ -1,0 +1,20 @@
+{
+  "name": "ai-learning-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+  "dev": "turbo run dev",
+  "build": "turbo run build"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "turbo": "^2.9.12"
+  }
+}
