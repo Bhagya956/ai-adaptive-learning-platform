@@ -22,10 +22,42 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "student",
     },
+     currentRole: {
+  type: String,
+  default: "",
+},
+
+experience: {
+  type: Number,
+  default: 0,
+},
+
+skills: [
+  {
+    type: String,
+  },
+],
+
+interestedDomains: [
+  {
+    type: String,
+  },
+],
+
+careerGoal: {
+  type: String,
+  default: "",
+},
+
+education: {
+  type: String,
+  default: "",
+},
   },
   {
     timestamps: true,
-  }
+  },
+ 
 );
 
 const User = mongoose.model("User", userSchema);
