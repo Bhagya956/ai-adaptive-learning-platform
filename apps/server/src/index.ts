@@ -6,6 +6,12 @@ import connectDB from "./config/db";
 import authRoutes from "./routes/auth.routes";
 import profileRoutes from "./routes/profile.routes";
 import aiRoutes from "./routes/ai.routes";
+import resumeRoutes from "./routes/resume.routes";
+import adminRoutes from "./routes/admin.routes";
+import skillGapRoutes
+from "./routes/skillgap.routes";
+import interviewRoutes
+from "./routes/interview.routes";
 
 dotenv.config();
 
@@ -27,6 +33,19 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/ai", aiRoutes);
+app.use("/api/resume", resumeRoutes);
+app.use(
+  "/api/admin",
+  adminRoutes
+);
+app.use(
+  "/api/skill-gap",
+  skillGapRoutes
+);
+app.use(
+  "/api/interview-prep",
+  interviewRoutes
+);
 
 const PORT = process.env.PORT || 5000;
 
