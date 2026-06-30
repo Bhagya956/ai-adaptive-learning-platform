@@ -58,3 +58,33 @@ export const getRoadmap = async (
     });
   }
 };
+
+/* ===========================
+   ROADMAP HISTORY
+=========================== */
+
+export const getRoadmapHistory =
+  async (
+    req: any,
+    res: Response
+  ) => {
+    try {
+      const roadmaps =
+        await Roadmap.find({
+          userId: req.user.id,
+        }).sort({
+          createdAt: -1,
+        });
+
+      res.status(200).json(
+        roadmaps
+      );
+    } catch (error: any) {
+      console.error(error);
+
+      res.status(500).json({
+        message:
+          "Failed to fetch roadmap history",
+      });
+    }
+  };

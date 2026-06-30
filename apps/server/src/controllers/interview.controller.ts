@@ -58,3 +58,30 @@ export const generateInterviewGuide = async (
     });
   }
 };
+
+
+export const getInterviewHistory =
+  async (
+    req: any,
+    res: Response
+  ) => {
+    try {
+      const history =
+        await InterviewPrep.find({
+          userId: req.user.id,
+        }).sort({
+          createdAt: -1,
+        });
+
+      return res.status(200).json(
+        history
+      );
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        message:
+          "Failed to fetch interview history",
+      });
+    }
+  };

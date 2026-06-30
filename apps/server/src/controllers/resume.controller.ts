@@ -49,3 +49,33 @@ export const analyzeResume = async (
     });
   }
 };
+
+
+///Resume HIstoryy//
+
+
+export const getResumeHistory =
+  async (
+    req: any,
+    res: Response
+  ) => {
+    try {
+      const resumes =
+        await ResumeAnalysis.find({
+          userId: req.user.id,
+        }).sort({
+          createdAt: -1,
+        });
+
+      return res.status(200).json(
+        resumes
+      );
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        message:
+          "Failed to fetch resume history",
+      });
+    }
+  };

@@ -156,31 +156,63 @@ const removeDomain = (
             {profile.email}
           </p>
 
-          <p>
-            <strong>Current Role:</strong>{" "}
-            {/* {profile.currentRole} */}
-            <input
-  type="text"
-  value={profile.currentRole}
-  onChange={(e) =>
-    setProfile({
-      ...profile,
-      currentRole: e.target.value,
-    })
-  }
-  className="border p-2 rounded w-full"
-/>
-          </p>
+     <div>
+  <label className="font-bold">
+    Current Role
+  </label>
 
-          <p>
-            <strong>Experience:</strong>{" "}
-            {profile.experience}
-          </p>
+  <input
+    type="text"
+    value={profile.currentRole}
+    onChange={(e) =>
+      setProfile({
+        ...profile,
+        currentRole:
+          e.target.value,
+      })
+    }
+    className="border p-2 rounded w-full"
+  />
+</div>
 
-          <p>
-            <strong>Career Goal:</strong>{" "}
-            {profile.careerGoal}
-          </p>
+       <div>
+  <label className="font-bold">
+    Experience (Years)
+  </label>
+
+  <input
+    type="number"
+    value={profile.experience}
+    onChange={(e) =>
+      setProfile({
+        ...profile,
+        experience: Number(
+          e.target.value
+        ),
+      })
+    }
+    className="border p-2 rounded w-full"
+  />
+</div>
+
+      <div>
+  <label className="font-bold">
+    Career Goal
+  </label>
+
+  <input
+    type="text"
+    value={profile.careerGoal}
+    onChange={(e) =>
+      setProfile({
+        ...profile,
+        careerGoal:
+          e.target.value,
+      })
+    }
+    className="border p-2 rounded w-full"
+  />
+</div>
 
           <div className="mt-6">
   <h2 className="font-bold">
@@ -282,10 +314,24 @@ const removeDomain = (
 
 
 
-          <p>
-            <strong>Education:</strong>{" "}
-            {profile.education}
-          </p>
+   <div>
+  <label className="font-bold">
+    Education
+  </label>
+
+  <input
+    type="text"
+    value={profile.education}
+    onChange={(e) =>
+      setProfile({
+        ...profile,
+        education:
+          e.target.value,
+      })
+    }
+    className="border p-2 rounded w-full"
+  />
+</div>
           <button
   onClick={updateProfile}
   className="bg-blue-500 text-white px-4 py-2 rounded"
