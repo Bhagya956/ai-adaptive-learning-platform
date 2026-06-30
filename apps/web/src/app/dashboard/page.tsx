@@ -1,91 +1,70 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+// import { getDashboardStats } from "@/lib/dashboard";
+import { getDashboardStats } from "@/src/lib/dashboard";
 
-import { useAuthStore } from "@/src/store/authStore"; 
-import ProtectedRoute from "@/src/components/ProtectedRoute";
-import Link from "next/link";
 
 export default function DashboardPage() {
-  const router = useRouter();
+  const [stats, setStats] =
+    useState<any>(null);
 
-  const { user, logout } =
-    useAuthStore();
+  useEffect(() => {
+    loadStats();
+  }, []);
 
-  const handleLogout = () => {
-    logout();
+  const loadStats = async () => {
+    try {
+      const data =
+        await getDashboardStats();
 
-    router.push("/login");
+      setStats(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  if (!stats) {
+    return <p>Loading...</p>;
+  }
+
   return (
-     <ProtectedRoute>
-    <div className="p-10">
-      <h1 className="text-3xl font-bold">
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-6">
         Dashboard
       </h1>
 
-      <p className="mt-4">
-        Welcome {user?.name}
-      </p>
+      <div className="grid grid-cols-2 gap-4">
 
-      <p>{user?.email}</p>
-      <button
-  onClick={() => router.push("/resume")}
-  className="bg-green-500 text-white px-4 py-2 rounded"
->
-  Resume Analyzer
-</button>
+        <div className="border rounded-lg p-4">
+          <h2>Roadmaps</h2>
+          <p className="text-2xl">
+            {stats.roadmaps}
+          </p>
+        </div>
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+        <div className="border rounded-lg p-4">
+          <h2>Resumes</h2>
+          <p className="text-2xl">
+            {stats.resumes}
+          </p>
+        </div>
 
-  <Link
-    href="/roadmap"
-    className="border rounded p-6 hover:bg-gray-100"
-  >
-    <h2 className="font-bold">
-      AI Roadmap
-    </h2>
-  </Link>
+        <div className="border rounded-lg p-4">
+          <h2>Skill Gaps</h2>
+          <p className="text-2xl">
+            {stats.skillGaps}
+          </p>
+        </div>
 
+        <div className="border rounded-lg p-4">
+          <h2>Interviews</h2>
+          <p className="text-2xl">
+            {stats.interviews}
+          </p>
+        </div>
 
-
-  <Link
-    href="/skill-gap"
-    className="border rounded p-6 hover:bg-gray-100"
-  >
-    <h2 className="font-bold">
-      Skill Gap Analyzer
-    </h2>
-  </Link>
-
-  <Link
-    href="/interview-prep"
-    className="border rounded p-6 hover:bg-gray-100"
-  >
-    <h2 className="font-bold">
-      Interview Preparation
-    </h2>
-  </Link>
-
-  <Link
-    href="/profile"
-    className="border rounded p-6 hover:bg-gray-100"
-  >
-    <h2 className="font-bold">
-      Profile
-    </h2>
-  </Link>
-
-</div>
-
-      <button
-        onClick={handleLogout}
-        className="mt-6 bg-red-500 text-white px-4 py-2 rounded"
-      >
-        Logout
-      </button>
+      </div>
     </div>
-    </ProtectedRoute>
   );
 }

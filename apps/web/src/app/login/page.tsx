@@ -39,10 +39,20 @@ export default function LoginPage() {
     data: LoginFormData
   ) => {
     try {
-      const response = await api.post(
-        "/auth/login",
-        data
-      );
+  const response = await api.post(
+  "/auth/login",
+  data
+);
+
+localStorage.setItem(
+  "token",
+  response.data.token
+);
+
+localStorage.setItem(
+  "user",
+  JSON.stringify(response.data.user)
+);
 
       console.log("consoling login response",response)
 
