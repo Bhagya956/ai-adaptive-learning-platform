@@ -1,5 +1,8 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+
 import User from "../models/User";
+import SkillGapAnalysis from "../models/skillgap.model";
+
 import { generateSkillGapAnalysis }
 from "../services/skillgap.service";
 
@@ -10,9 +13,10 @@ export const analyzeSkillGap = async (
   try {
     const { targetRole } = req.body;
 
-    const user = await User.findById(
-      req.user.id
-    );
+    const userId = req.user.id;
+
+    const user =
+      await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({
@@ -20,20 +24,31 @@ export const analyzeSkillGap = async (
       });
     }
 
-    const analysis =
-      await generateSkillGapAnalysis(
-        user,
-        targetRole
-      );
+ const analysis =
+  await generateSkillGapAnalysis(
+    user,
+    targetRole
+  );
 
-    res.status(200).json({
+if (!analysis) {
+  return res.status(500).json({
+    message: "Failed to generate analysis",
+  });
+}
+
+    await SkillGapAnalysis.create({
+      userId,
+      targetRole,
       analysis,
     });
 
+    return res.status(200).json({
+      analysis,
+    });
   } catch (error) {
     console.error(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message:
         "Skill gap analysis failed",
     });

@@ -1,19 +1,23 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { GoogleGenAI } from "@google/genai";
-
 console.log(
-  "Gemini Key:",
+  "GEMINI KEY IN SERVICE:",
   process.env.GEMINI_API_KEY
 );
+
+
+
+import { GoogleGenAI } from "@google/genai";
+
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY!,
 });
 
+
 export const generateRoadmap = async (
   profileData: any
-) => {
+): Promise<string> => {
   const prompt = `
 Generate a detailed learning roadmap.
 
@@ -48,6 +52,5 @@ Provide:
       contents: prompt,
     });
 
-  return response.text;
-
+  return response.text ?? "";
 };

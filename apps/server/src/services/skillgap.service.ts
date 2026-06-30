@@ -44,5 +44,6 @@ Provide a structured response.
         contents: prompt,
       });
 
-    return response.text;
+    // return response.text;
+    return response.text ?? "";
   };

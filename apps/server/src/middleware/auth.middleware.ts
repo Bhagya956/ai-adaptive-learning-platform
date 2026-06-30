@@ -1,17 +1,19 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-interface AuthRequest extends Request {
-  user?: any;
-}
-
 const authMiddleware = (
-  req: AuthRequest,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const authHeader = req.headers.authorization;
+    console.log(
+      "AUTH HEADER:",
+      req.headers.authorization
+    );
+
+    const authHeader =
+      req.headers.authorization;
 
     if (!authHeader) {
       return res.status(401).json({
@@ -19,18 +21,38 @@ const authMiddleware = (
       });
     }
 
-const token = authHeader.split(" ")[1] as string;
+    const token =
+      authHeader.split(" ")[1];
+
+    console.log("TOKEN:", token);
+
+    console.log(
+      "JWT SECRET:",
+      process.env.JWT_SECRET
+    );
+
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET as string
+      process.env.JWT_SECRET!
+    );
+
+    console.log(
+      "DECODED TOKEN:",
+      decoded
     );
 
     req.user = decoded;
 
     next();
-  } catch (error) {
-    res.status(401).json({
+  } catch (error: any) {
+    console.log(
+      "JWT ERROR:",
+      error.message
+    );
+
+    return res.status(401).json({
       message: "Invalid token",
+      error: error.message,
     });
   }
 };

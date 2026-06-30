@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import pdfParse from "pdf-parse";
-import { analyzeResumeWithAI }
-from "../services/resume.service";
+
+import { analyzeResumeWithAI } from "../services/resume.service";
+import ResumeAnalysis from "../models/resume.model";
 
 export const analyzeResume = async (
   req: any,
@@ -14,25 +15,36 @@ export const analyzeResume = async (
       });
     }
 
+    const userId = req.user.id;
+
     const pdfData = await pdfParse(
       req.file.buffer
     );
 
-    // res.status(200).json({
-    //   extractedText: pdfData.text,
-    // });
     const analysis =
-  await analyzeResumeWithAI(
-    pdfData.text
-  );
+      await analyzeResumeWithAI(
+        pdfData.text
+      );
 
-res.status(200).json({
-  analysis,
-});
+    if (!analysis) {
+      return res.status(500).json({
+        message:
+          "Failed to generate resume analysis",
+      });
+    }
+
+    await ResumeAnalysis.create({
+      userId,
+      analysis,
+    });
+
+    return res.status(200).json({
+      analysis,
+    });
   } catch (error) {
     console.error(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Resume analysis failed",
     });
   }

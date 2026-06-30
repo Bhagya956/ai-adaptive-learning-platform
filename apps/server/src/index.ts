@@ -12,8 +12,17 @@ import skillGapRoutes
 from "./routes/skillgap.routes";
 import interviewRoutes
 from "./routes/interview.routes";
+import dashboardRoutes
+from "./routes/dashboard.routes";
 
 dotenv.config();
+
+console.log(
+  "Gemini Key Loaded:",
+  process.env.GEMINI_API_KEY
+    ? "YES"
+    : "NO"
+);
 
 connectDB();
 
@@ -45,6 +54,10 @@ app.use(
 app.use(
   "/api/interview-prep",
   interviewRoutes
+);
+app.use(
+  "/api/dashboard",
+  dashboardRoutes
 );
 
 const PORT = process.env.PORT || 5000;
