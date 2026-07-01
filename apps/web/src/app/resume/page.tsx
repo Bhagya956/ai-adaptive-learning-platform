@@ -5,8 +5,9 @@ import axios from "axios";
 
 export default function ResumePage() {
   const [file, setFile] = useState<File | null>(null);
-  const [analysis, setAnalysis] = useState("");
-  const [loading, setLoading] = useState(false);
+const [analysis, setAnalysis] =
+  useState<any>(null);
+    const [loading, setLoading] = useState(false);
 
   const handleUpload = async () => {
     if (!file) return;
@@ -29,7 +30,18 @@ export default function ResumePage() {
         }
       );
 
-      setAnalysis(response.data.analysis);
+let raw =
+  response.data.analysis;
+
+raw = raw
+  .replace(/```json/g, "")
+  .replace(/```/g, "")
+  .trim();
+
+const parsedAnalysis =
+  JSON.parse(raw);
+
+setAnalysis(parsedAnalysis);
     } catch (error) {
       console.error(error);
       alert("Resume analysis failed");
@@ -65,17 +77,116 @@ export default function ResumePage() {
         </p>
       )}
 
-      {analysis && (
-        <div className="mt-6 p-4 border rounded">
-          <h2 className="text-xl font-bold mb-2">
-            Analysis Result
-          </h2>
+   {analysis && (
+  <div className="mt-8 space-y-6">
 
-          <pre className="whitespace-pre-wrap">
-            {analysis}
-          </pre>
-        </div>
-      )}
+    <div className="border rounded p-4">
+      <h2 className="text-2xl font-bold">
+        Resume Score
+      </h2>
+
+      <p className="text-4xl font-bold text-green-600">
+        {analysis.score}/100
+      </p>
+    </div>
+
+    <div className="border rounded p-4">
+      <h2 className="font-bold text-xl mb-2">
+        Strengths
+      </h2>
+
+      <ul className="list-disc ml-5">
+        {analysis.strengths?.map(
+          (
+            item: string,
+            index: number
+          ) => (
+            <li key={index}>
+              {item}
+            </li>
+          )
+        )}
+      </ul>
+    </div>
+
+    <div className="border rounded p-4">
+      <h2 className="font-bold text-xl mb-2">
+        Weaknesses
+      </h2>
+
+      <ul className="list-disc ml-5">
+        {analysis.weaknesses?.map(
+          (
+            item: string,
+            index: number
+          ) => (
+            <li key={index}>
+              {item}
+            </li>
+          )
+        )}
+      </ul>
+    </div>
+
+    <div className="border rounded p-4">
+      <h2 className="font-bold text-xl mb-2">
+        Missing Skills
+      </h2>
+
+      <ul className="list-disc ml-5">
+        {analysis.missingSkills?.map(
+          (
+            item: string,
+            index: number
+          ) => (
+            <li key={index}>
+              {item}
+            </li>
+          )
+        )}
+      </ul>
+    </div>
+
+    <div className="border rounded p-4">
+      <h2 className="font-bold text-xl mb-2">
+        Suggestions
+      </h2>
+
+      <ul className="list-disc ml-5">
+        {analysis.suggestions?.map(
+          (
+            item: string,
+            index: number
+          ) => (
+            <li key={index}>
+              {item}
+            </li>
+          )
+        )}
+      </ul>
+    </div>
+
+    <div className="border rounded p-4">
+      <h2 className="font-bold text-xl mb-2">
+        Recommended Roles
+      </h2>
+
+      <ul className="list-disc ml-5">
+        {analysis.recommendedRoles?.map(
+          (
+            item: string,
+            index: number
+          ) => (
+            <li key={index}>
+              {item}
+            </li>
+          )
+        )}
+      </ul>
+    </div>
+
+  </div>
+)}
     </div>
   );
 }

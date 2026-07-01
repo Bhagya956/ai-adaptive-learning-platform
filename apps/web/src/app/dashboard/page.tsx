@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 // import { getDashboardStats } from "@/lib/dashboard";
 import { getDashboardStats } from "@/src/lib/dashboard";
+import Link from "next/link";
 
 
 export default function DashboardPage() {
@@ -36,33 +37,41 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-2 gap-4">
 
-        <div className="border rounded-lg p-4">
-          <h2>Roadmaps</h2>
-          <p className="text-2xl">
-            {stats.roadmaps}
-          </p>
-        </div>
+     <Link href="/roadmap/history">
+  <div className="border rounded-lg p-4 hover:bg-gray-100 cursor-pointer">
+    <h2>Roadmaps</h2>
+    <p className="text-2xl">
+      {stats.roadmaps}
+    </p>
+  </div>
+</Link>
 
-        <div className="border rounded-lg p-4">
-          <h2>Resumes</h2>
-          <p className="text-2xl">
-            {stats.resumes}
-          </p>
-        </div>
+       <Link href="/resume/history">
+  <div className="border rounded-lg p-4 hover:bg-gray-100 cursor-pointer">
+    <h2>Resumes</h2>
+    <p className="text-2xl">
+      {stats.resumes}
+    </p>
+  </div>
+</Link>
 
-        <div className="border rounded-lg p-4">
-          <h2>Skill Gaps</h2>
-          <p className="text-2xl">
-            {stats.skillGaps}
-          </p>
-        </div>
+      <Link href="/skill-gap/history">
+  <div className="border rounded-lg p-4 hover:bg-gray-100 cursor-pointer">
+    <h2>Skill Gaps</h2>
+    <p className="text-2xl">
+      {stats.skillGaps}
+    </p>
+  </div>
+</Link>
 
-        <div className="border rounded-lg p-4">
-          <h2>Interviews</h2>
-          <p className="text-2xl">
-            {stats.interviews}
-          </p>
-        </div>
+     <Link href="/interview-prep/history">
+  <div className="border rounded-lg p-4 hover:bg-gray-100 cursor-pointer">
+    <h2>Interviews</h2>
+    <p className="text-2xl">
+      {stats.interviews}
+    </p>
+  </div>
+</Link>
 
       </div>
     </div>

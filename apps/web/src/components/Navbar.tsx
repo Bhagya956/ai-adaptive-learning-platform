@@ -31,6 +31,10 @@ export default function Navbar() {
           Interview Prep
         </Link>
 
+        <Link href="/roadmap/history">
+  Roadmap History
+</Link>
+
       </div>
     </nav>
   );

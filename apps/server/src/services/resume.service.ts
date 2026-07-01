@@ -6,18 +6,36 @@ const ai = new GoogleGenAI({
 
 export const analyzeResumeWithAI = async (
   resumeText: string
-) => {
-const prompt = `
-Analyze the resume and return ONLY valid JSON.
+): Promise<string> => {
+  const prompt = `
+You are an expert ATS Resume Reviewer.
 
-Format:
+Analyze the following resume.
+
+Return ONLY raw JSON.
+
+Do NOT wrap JSON in markdown.
+Do NOT use \`\`\`json.
+Do NOT add explanations.
+Return a valid JSON object only.
 
 {
-  "score": number,
+  "score": 0,
   "strengths": [],
+  "weaknesses": [],
   "missingSkills": [],
-  "suggestions": []
+  "suggestions": [],
+  "recommendedRoles": []
 }
+
+Rules:
+
+- score must be between 0 and 100
+- strengths must contain positive points
+- weaknesses must contain improvement areas
+- missingSkills must contain important missing technologies
+- suggestions must contain actionable recommendations
+- recommendedRoles must contain suitable job roles
 
 Resume:
 
@@ -30,5 +48,5 @@ ${resumeText}
       contents: prompt,
     });
 
-  return response.text;
+  return response.text ?? "";
 };
