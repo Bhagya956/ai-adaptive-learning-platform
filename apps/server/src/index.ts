@@ -14,6 +14,8 @@ import interviewRoutes
 from "./routes/interview.routes";
 import dashboardRoutes
 from "./routes/dashboard.routes";
+import learningRoutes
+from "./routes/learning.routes";
 
 dotenv.config();
 
@@ -58,6 +60,11 @@ app.use(
 app.use(
   "/api/dashboard",
   dashboardRoutes
+);
+
+app.use(
+  "/api/learning",
+  learningRoutes
 );
 
 const PORT = process.env.PORT || 5000;

@@ -35,6 +35,10 @@ export default function Navbar() {
   Roadmap History
 </Link>
 
+<Link href="/learning">
+  Learning Tracker
+</Link>
+
       </div>
     </nav>
   );
