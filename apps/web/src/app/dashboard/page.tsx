@@ -35,6 +35,7 @@ export default function DashboardPage() {
         Dashboard
       </h1>
 
+
       <div className="grid grid-cols-2 gap-4">
 
      <Link href="/roadmap/history">
@@ -74,6 +75,19 @@ export default function DashboardPage() {
 </Link>
 
       </div>
+
+      <Link
+  href="/job-readiness"
+  className="border rounded p-4 hover:bg-gray-100"
+>
+  <h2 className="font-bold">
+    Job Readiness Score
+  </h2>
+
+  <p>
+    Check your career readiness
+  </p>
+</Link>
     </div>
   );
 }
