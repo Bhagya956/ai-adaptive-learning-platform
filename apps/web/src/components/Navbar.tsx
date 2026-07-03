@@ -39,6 +39,20 @@ export default function Navbar() {
   Learning Tracker
 </Link>
 
+
+<Link
+  href="/admin"
+  className="border rounded p-4 hover:bg-gray-100"
+>
+  <h2 className="font-bold">
+    Admin Dashboard
+  </h2>
+
+  <p>
+    Platform analytics
+  </p>
+</Link>
+
       </div>
     </nav>
   );

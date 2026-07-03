@@ -18,6 +18,8 @@ import learningRoutes
 from "./routes/learning.routes";
 import jobReadinessRoutes
 from "./routes/jobreadiness.routes";
+import adminAnalyticsRoutes
+from "./routes/adminanalytics.routes";
 
 dotenv.config();
 
@@ -73,6 +75,10 @@ app.use(
 app.use(
   "/api/job-readiness",
   jobReadinessRoutes
+);
+app.use(
+  "/api/admin-analytics",
+  adminAnalyticsRoutes
 );
 
 const PORT = process.env.PORT || 5000;
