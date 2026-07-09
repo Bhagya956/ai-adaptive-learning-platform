@@ -20,6 +20,8 @@ import jobReadinessRoutes
 from "./routes/jobreadiness.routes";
 import adminAnalyticsRoutes
 from "./routes/adminanalytics.routes";
+import quizRoutes
+from "./routes/quiz.routes";
 
 dotenv.config();
 
@@ -79,6 +81,11 @@ app.use(
 app.use(
   "/api/admin-analytics",
   adminAnalyticsRoutes
+);
+
+app.use(
+  "/api/quiz",
+  quizRoutes
 );
 
 const PORT = process.env.PORT || 5000;

@@ -53,6 +53,33 @@ export default function Navbar() {
   </p>
 </Link>
 
+
+<Link
+  href="/quiz"
+  className="border rounded p-4"
+>
+  <h2 className="font-bold">
+    Quiz Generator
+  </h2>
+
+  <p>
+    Test your knowledge
+  </p>
+</Link>
+
+<Link
+  href="/quiz/history"
+  className="border rounded p-4"
+>
+  <h2 className="font-bold">
+    Quiz History
+  </h2>
+
+  <p>
+    View previous quizzes
+  </p>
+</Link>
+
       </div>
     </nav>
   );
