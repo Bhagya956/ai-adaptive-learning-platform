@@ -1,6 +1,8 @@
 import express from "express";
 
-import { getAllUsers } from "../controllers/admin.controller";
+import { getAllUsers,
+getUserById,
+deleteUser } from "../controllers/admin.controller";
 import { adminMiddleware } from "../middleware/admin.middleware";
 import authMiddleware from "../middleware/auth.middleware";
 
@@ -11,6 +13,21 @@ router.get(
   authMiddleware,
   adminMiddleware,
   getAllUsers
+);
+
+
+router.get(
+  "/users/:id",
+  authMiddleware,
+  adminMiddleware,
+  getUserById
+);
+
+router.delete(
+  "/users/:id",
+  authMiddleware,
+  adminMiddleware,
+  deleteUser
 );
 
 export default router;

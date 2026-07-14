@@ -1,86 +1,118 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [role, setRole] =
+    useState("");
+
+  useEffect(() => {
+    const authStorage =
+      JSON.parse(
+        localStorage.getItem(
+          "auth-storage"
+        ) || "{}"
+      );
+
+    setRole(
+      authStorage?.state?.user
+        ?.role || ""
+    );
+  }, []);
+
+  const studentLinks = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: "Profile",
+      href: "/profile",
+    },
+    {
+      label: "Roadmap",
+      href: "/roadmap",
+    },
+    {
+      label: "Roadmap History",
+      href: "/roadmap/history",
+    },
+    {
+      label: "Resume Analyzer",
+      href: "/resume",
+    },
+    {
+      label: "Skill Gap",
+      href: "/skill-gap",
+    },
+    {
+      label: "Interview Prep",
+      href: "/interview-prep",
+    },
+    {
+      label: "Learning Tracker",
+      href: "/learning",
+    },
+    {
+      label: "Quiz",
+      href: "/quiz",
+    },
+    {
+      label: "Quiz History",
+      href: "/quiz/history",
+    },
+    {
+      label: "Job Readiness",
+      href: "/job-readiness",
+    },
+  ];
+
+  const adminLinks = [
+    {
+      label: "Admin Dashboard",
+      href: "/admin",
+    },
+    {
+      label: "User Management",
+      href: "/admin/users",
+    },
+    {
+      label: "Admin Analytics",
+      href: "/admin/analytics",
+    },
+  ];
+
   return (
     <nav className="bg-gray-900 text-white p-4">
-      <div className="flex gap-6">
 
-        <Link href="/dashboard">
-          Dashboard
-        </Link>
+      <div className="flex flex-wrap gap-4">
 
-        <Link href="/profile">
-          Profile
-        </Link>
+        {studentLinks.map(
+          (link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          )
+        )}
 
-        <Link href="/roadmap">
-          Roadmap
-        </Link>
-
-        <Link href="/resume">
-          Resume Analyzer
-        </Link>
-
-        <Link href="/skill-gap">
-          Skill Gap
-        </Link>
-
-        <Link href="/interview-prep">
-          Interview Prep
-        </Link>
-
-        <Link href="/roadmap/history">
-  Roadmap History
-</Link>
-
-<Link href="/learning">
-  Learning Tracker
-</Link>
-
-
-<Link
-  href="/admin"
-  className="border rounded p-4 hover:bg-gray-100"
->
-  <h2 className="font-bold">
-    Admin Dashboard
-  </h2>
-
-  <p>
-    Platform analytics
-  </p>
-</Link>
-
-
-<Link
-  href="/quiz"
-  className="border rounded p-4"
->
-  <h2 className="font-bold">
-    Quiz Generator
-  </h2>
-
-  <p>
-    Test your knowledge
-  </p>
-</Link>
-
-<Link
-  href="/quiz/history"
-  className="border rounded p-4"
->
-  <h2 className="font-bold">
-    Quiz History
-  </h2>
-
-  <p>
-    View previous quizzes
-  </p>
-</Link>
+        {role === "admin" &&
+          adminLinks.map(
+            (link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+              >
+                {link.label}
+              </Link>
+            )
+          )}
 
       </div>
+
     </nav>
   );
 }

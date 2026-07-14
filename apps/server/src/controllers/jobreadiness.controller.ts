@@ -1,11 +1,13 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 
-import User from "../models/User";
-import Learning from "../models/learning.model";
+
 import ResumeAnalysis from "../models/resume.model";
 import SkillGapAnalysis from "../models/skillgap.model";
+import Learning from "../models/learning.model";
+import Quiz from "../models/quiz.model";
+import JobReadiness from "../models/jobReadiness.model";
 
-export const getJobReadinessScore =
+export const generateJobReadinessScore =
   async (
     req: any,
     res: Response
@@ -13,136 +15,222 @@ export const getJobReadinessScore =
     try {
       const userId = req.user.id;
 
-      const user =
-        await User.findById(userId);
-
-      if (!user) {
-        return res.status(404).json({
-          message: "User not found",
-        });
-      }
-
-      const resume =
-        await ResumeAnalysis
-          .findOne({
-            userId,
-          })
-          .sort({
-            createdAt: -1,
-          });
-
-      const skillGap =
-        await SkillGapAnalysis
-          .findOne({
-            userId,
-          })
-          .sort({
-            createdAt: -1,
-          });
-
-      const tasks =
-        await Learning.find({
-          userId,
-        });
-
-      let score = 0;
-
-      /* --------------------
-         PROFILE SCORE
-      -------------------- */
-
-      let profileScore = 0;
-
-      if (user.currentRole)
-        profileScore += 5;
-
-      if (user.education)
-        profileScore += 5;
-
-      if (user.careerGoal)
-        profileScore += 5;
-
-      if (
-        user.skills &&
-        user.skills.length > 0
-      )
-        profileScore += 5;
-
-      score += profileScore;
-
-      /* --------------------
-         LEARNING SCORE
-      -------------------- */
-
-      let learningScore = 0;
-
-      if (tasks.length > 0) {
-        const completedTasks =
-          tasks.filter(
-            (task) =>
-              task.status ===
-              "completed"
-          ).length;
-
-        const percentage =
-          (completedTasks /
-            tasks.length) *
-          30;
-
-        learningScore =
-          Math.round(
-            percentage
-          );
-      }
-
-      score += learningScore;
-
-      /* --------------------
+      /* =====================
          RESUME SCORE
-      -------------------- */
+      ===================== */
+
+      const latestResume =
+        await ResumeAnalysis.findOne({
+          userId,
+        }).sort({
+          createdAt: -1,
+        });
 
       let resumeScore = 0;
 
-      if (resume) {
-        resumeScore = 40;
+      if (latestResume) {
+        try {
+          const parsed =
+            JSON.parse(
+              latestResume.analysis
+            );
+
+          resumeScore =
+            parsed.score || 0;
+        } catch {
+          resumeScore = 0;
+        }
       }
 
-      score += resumeScore;
+      /* =====================
+         LEARNING SCORE
+      ===================== */
 
-      /* --------------------
+      const totalTasks =
+        await Learning.countDocuments({
+          userId,
+        });
+
+      const completedTasks =
+        await Learning.countDocuments({
+          userId,
+          status: "completed",
+        });
+
+      const learningScore =
+        totalTasks > 0
+          ? Math.round(
+              (completedTasks /
+                totalTasks) *
+                100
+            )
+          : 0;
+
+      /* =====================
+         QUIZ SCORE
+      ===================== */
+
+      const quizzes =
+        await Quiz.find({
+          userId,
+        });
+
+      let quizScore = 0;
+
+      if (quizzes.length > 0) {
+        const totalQuizScore =
+          quizzes.reduce(
+            (
+              sum: number,
+              quiz: any
+            ) => {
+              return (
+                sum +
+                (quiz.score /
+                  quiz.totalQuestions) *
+                  100
+              );
+            },
+            0
+          );
+
+        quizScore = Math.round(
+          totalQuizScore /
+            quizzes.length
+        );
+
+        
+      }
+
+      /* =====================
          SKILL GAP SCORE
-      -------------------- */
+      ===================== */
 
-      let skillGapScore = 0;
+      const latestSkillGap =
+        await SkillGapAnalysis.findOne({
+          userId,
+        }).sort({
+          createdAt: -1,
+        });
 
-      if (skillGap) {
-        skillGapScore = 10;
+      let skillGapScore = 100;
+
+      let weaknesses: string[] =
+        [];
+
+      let recommendations:
+        string[] = [];
+
+      if (latestSkillGap) {
+        try {
+          const parsed =
+            JSON.parse(
+              latestSkillGap.analysis
+            );
+
+          const missingSkills =
+            parsed.missingSkills ||
+            [];
+
+          skillGapScore =
+            Math.max(
+              100 -
+                missingSkills.length *
+                  10,
+              0
+            );
+
+          weaknesses =
+            missingSkills;
+
+          recommendations =
+            parsed.recommendations ||
+            [];
+        } catch {
+          skillGapScore = 50;
+        }
       }
 
-      score += skillGapScore;
+      /* =====================
+         FINAL SCORE
+      ===================== */
 
-      if (score > 100) {
-        score = 100;
-      }
+      const finalScore =
+        Math.round(
+          resumeScore * 0.4 +
+            learningScore * 0.2 +
+            quizScore * 0.2 +
+            skillGapScore * 0.2
+        );
 
-      return res.status(200).json({
-        jobReadinessScore:
-          score,
+      const strengths = [];
 
-        breakdown: {
-          profileScore,
-          learningScore,
-          resumeScore,
-          skillGapScore,
-        },
-      });
+      if (resumeScore >= 70)
+        strengths.push(
+          "Strong Resume"
+        );
 
+      if (learningScore >= 70)
+        strengths.push(
+          "Consistent Learning Progress"
+        );
+
+      if (quizScore >= 70)
+        strengths.push(
+          "Good Quiz Performance"
+        );
+
+      const savedResult =
+        await JobReadiness.create({
+          userId,
+          score: finalScore,
+          strengths,
+          weaknesses,
+          recommendations,
+        });
+
+
+
+      return res.status(200).json(
+        savedResult
+      );
     } catch (error) {
       console.error(error);
 
       return res.status(500).json({
         message:
-          "Failed to calculate job readiness score",
+          "Failed to generate job readiness score",
+      });
+    }
+ 
+
+ 
+ 
+  
+  };
+
+export const getJobReadinessHistory =
+  async (
+    req: any,
+    res: Response
+  ) => {
+    try {
+      const history =
+        await JobReadiness.find({
+          userId: req.user.id,
+        }).sort({
+          createdAt: -1,
+        });
+
+      return res.status(200).json(
+        history
+      );
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        message:
+          "Failed to fetch job readiness history",
       });
     }
   };

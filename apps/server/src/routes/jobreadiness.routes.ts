@@ -3,15 +3,22 @@ import express from "express";
 import authMiddleware from "../middleware/auth.middleware";
 
 import {
-  getJobReadinessScore,
-} from "../controllers/jobreadiness.controller";
+  generateJobReadinessScore,
+  getJobReadinessHistory,
+} from "../controllers/jobReadiness.controller";
 
 const router = express.Router();
 
-router.get(
+router.post(
   "/",
   authMiddleware,
-  getJobReadinessScore
+  generateJobReadinessScore
+);
+
+router.get(
+  "/history",
+  authMiddleware,
+  getJobReadinessHistory
 );
 
 export default router;

@@ -23,6 +23,7 @@ from "./routes/adminanalytics.routes";
 import quizRoutes
 from "./routes/quiz.routes";
 
+
 dotenv.config();
 
 console.log(
@@ -87,6 +88,9 @@ app.use(
   "/api/quiz",
   quizRoutes
 );
+
+
+
 
 const PORT = process.env.PORT || 5000;
 

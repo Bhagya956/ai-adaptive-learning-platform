@@ -4,18 +4,23 @@ import { useEffect, useState } from "react";
 import api from "@/src/services/api";
 
 export default function JobReadinessPage() {
-  const [data, setData] =
+  const [latestScore, setLatestScore] =
     useState<any>(null);
 
+  const [history, setHistory] =
+    useState<any[]>([]);
+
   const [loading, setLoading] =
-    useState(true);
+    useState(false);
 
   useEffect(() => {
-    fetchScore();
+    fetchHistory();
   }, []);
 
-  const fetchScore = async () => {
+  const generateScore = async () => {
     try {
+      setLoading(true);
+
       const token = JSON.parse(
         localStorage.getItem(
           "auth-storage"
@@ -23,16 +28,23 @@ export default function JobReadinessPage() {
       )?.state?.token;
 
       const response =
-        await api.get(
+        await api.post(
           "/job-readiness",
+          {},
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization:
+                `Bearer ${token}`,
             },
           }
         );
 
-      setData(response.data);
+      setLatestScore(
+        response.data
+      );
+
+      fetchHistory();
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -40,76 +52,201 @@ export default function JobReadinessPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="p-10">
-        Loading...
-      </div>
-    );
-  }
+  const fetchHistory =
+    async () => {
+      try {
+        const token = JSON.parse(
+          localStorage.getItem(
+            "auth-storage"
+          ) || "{}"
+        )?.state?.token;
+
+        const response =
+          await api.get(
+            "/job-readiness/history",
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
+          );
+
+        setHistory(
+          response.data
+        );
+
+        if (
+          response.data.length > 0
+        ) {
+          setLatestScore(
+            response.data[0]
+          );
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+  const getLevel = (
+    score: number
+  ) => {
+    if (score >= 70)
+      return "Job Ready";
+
+    if (score >= 40)
+      return "Intermediate";
+
+    return "Beginner";
+  };
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold mb-6">
-        Job Readiness Score
-      </h1>
 
-      <div className="border rounded p-6 mb-6">
-        <h2 className="text-xl font-bold">
-          Overall Score
-        </h2>
+      <div className="flex justify-between items-center mb-6">
 
-        <p className="text-5xl font-bold text-green-600 mt-4">
-          {
-            data?.jobReadinessScore
-          }
-          /100
-        </p>
+        <h1 className="text-3xl font-bold">
+          Job Readiness Score
+        </h1>
+
+        <button
+          onClick={generateScore}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Generate Score
+        </button>
+
       </div>
 
-      <div className="border rounded p-6">
-        <h2 className="text-xl font-bold mb-4">
-          Score Breakdown
-        </h2>
+      {loading && (
+        <p>Generating...</p>
+      )}
 
-        <div className="space-y-3">
-          <p>
-            Profile Score:
-            {" "}
-            {
-              data?.breakdown
-                ?.profileScore
-            }
+      {latestScore && (
+        <div className="border rounded p-6 mb-8">
+
+          <h2 className="text-xl font-bold mb-4">
+            Latest Score
+          </h2>
+
+          <p className="text-5xl font-bold text-green-600">
+            {latestScore.score}/100
           </p>
 
-          <p>
-            Learning Score:
+          <p className="mt-3 text-lg">
+            Level:
             {" "}
-            {
-              data?.breakdown
-                ?.learningScore
-            }
+            {getLevel(
+              latestScore.score
+            )}
           </p>
 
-          <p>
-            Resume Score:
-            {" "}
-            {
-              data?.breakdown
-                ?.resumeScore
-            }
-          </p>
+          <div className="mt-6">
 
-          <p>
-            Skill Gap Score:
-            {" "}
-            {
-              data?.breakdown
-                ?.skillGapScore
-            }
-          </p>
+            <h3 className="font-bold mb-2">
+              Strengths
+            </h3>
+
+            <ul className="list-disc ml-6">
+              {latestScore.strengths?.map(
+                (
+                  item: string,
+                  index: number
+                ) => (
+                  <li key={index}>
+                    {item}
+                  </li>
+                )
+              )}
+            </ul>
+
+          </div>
+
+          <div className="mt-6">
+
+            <h3 className="font-bold mb-2">
+              Weaknesses
+            </h3>
+
+            <ul className="list-disc ml-6">
+              {latestScore.weaknesses?.map(
+                (
+                  item: string,
+                  index: number
+                ) => (
+                  <li key={index}>
+                    {item}
+                  </li>
+                )
+              )}
+            </ul>
+
+          </div>
+
+          <div className="mt-6">
+
+            <h3 className="font-bold mb-2">
+              Recommendations
+            </h3>
+
+            <ul className="list-disc ml-6">
+              {latestScore.recommendations?.map(
+                (
+                  item: string,
+                  index: number
+                ) => (
+                  <li key={index}>
+                    {item}
+                  </li>
+                )
+              )}
+            </ul>
+
+          </div>
+
         </div>
+      )}
+
+      <div>
+
+        <h2 className="text-2xl font-bold mb-4">
+          History
+        </h2>
+
+        {history.map(
+          (item) => (
+            <div
+              key={item._id}
+              className="border rounded p-4 mb-3"
+            >
+              <p>
+                Score:
+                {" "}
+                {item.score}/100
+              </p>
+
+              <p>
+                Level:
+                {" "}
+                {getLevel(
+                  item.score
+                )}
+              </p>
+
+              <p>
+                Date:
+                {" "}
+                {new Date(
+                  item.createdAt
+                ).toLocaleString()}
+              </p>
+            </div>
+          )
+        )}
+
       </div>
+
     </div>
   );
 }
