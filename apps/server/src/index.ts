@@ -23,6 +23,9 @@ from "./routes/adminanalytics.routes";
 import quizRoutes
 from "./routes/quiz.routes";
 
+import projectRecommendationRoutes
+from "./routes/projectRecommendation.routes";
+
 
 dotenv.config();
 
@@ -74,7 +77,6 @@ app.use(
   learningRoutes
 );
 
-
 app.use(
   "/api/job-readiness",
   jobReadinessRoutes
@@ -89,6 +91,15 @@ app.use(
   quizRoutes
 );
 
+app.use(
+  "/api/project-recommendation",
+  projectRecommendationRoutes
+);
+
+app.use(
+  "/api/project-recommendation",
+  projectRecommendationRoutes
+);
 
 
 

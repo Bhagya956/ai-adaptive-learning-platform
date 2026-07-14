@@ -111,6 +111,10 @@ export default function Navbar() {
             )
           )}
 
+          <Link href="/project-recommendation">
+  Project Recommendations
+</Link>
+
       </div>
 
     </nav>
