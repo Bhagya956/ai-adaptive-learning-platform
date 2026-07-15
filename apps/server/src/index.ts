@@ -25,6 +25,8 @@ from "./routes/quiz.routes";
 
 import projectRecommendationRoutes
 from "./routes/projectRecommendation.routes";
+import portfolioAnalyzerRoutes
+from "./routes/portfolioAnalyzer.routes";
 
 
 dotenv.config();
@@ -99,6 +101,11 @@ app.use(
 app.use(
   "/api/project-recommendation",
   projectRecommendationRoutes
+);
+
+app.use(
+  "/api/portfolio-analyzer",
+  portfolioAnalyzerRoutes
 );
 
 

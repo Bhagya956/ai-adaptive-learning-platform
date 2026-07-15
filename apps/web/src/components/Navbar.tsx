@@ -115,6 +115,10 @@ export default function Navbar() {
   Project Recommendations
 </Link>
 
+<Link href="/portfolio-analyzer">
+  Portfolio Analyzer
+</Link>
+
       </div>
 
     </nav>

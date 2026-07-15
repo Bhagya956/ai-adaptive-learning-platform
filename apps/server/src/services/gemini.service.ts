@@ -128,3 +128,66 @@ try {
   return [];
 }
 };
+
+
+export const analyzePortfolioWithAI =
+  async (
+    githubData: any
+  ): Promise<any> => {
+
+    const prompt = `
+You are a software engineering mentor.
+
+Analyze this GitHub portfolio.
+
+Total Repositories:
+${githubData.totalRepos}
+
+Languages Used:
+${githubData.languages.join(", ")}
+
+Return ONLY valid JSON.
+
+{
+  "strengths": [],
+  "weaknesses": [],
+  "recommendations": [],
+  "analysis": ""
+}
+`;
+
+    const response =
+      await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+
+    const text =
+      response.text ?? "{}";
+
+    const cleanedText =
+      text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+    try {
+      return JSON.parse(
+        cleanedText
+      );
+    } catch (error) {
+
+      console.error(
+        "PORTFOLIO JSON ERROR:",
+        cleanedText
+      );
+
+      return {
+        strengths: [],
+        weaknesses: [],
+        recommendations: [],
+        analysis:
+          "Unable to analyze portfolio",
+      };
+    }
+  };
