@@ -313,3 +313,62 @@ Return ONLY valid JSON.
       };
     }
   };
+
+
+  export const generateLearningResources =
+  async (
+    skill: string
+  ): Promise<any> => {
+
+    const prompt = `
+Recommend learning resources for:
+
+Skill:
+${skill}
+
+Return ONLY valid JSON.
+
+{
+  "documentation": [],
+  "youtube": [],
+  "practicePlatforms": [],
+  "projectIdeas": [],
+  "courses": []
+}
+`;
+
+    const response =
+      await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+
+    const text =
+      response.text ?? "{}";
+
+    const cleanedText =
+      text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+    try {
+      return JSON.parse(
+        cleanedText
+      );
+    } catch (error) {
+
+      console.error(
+        "RESOURCE JSON ERROR:",
+        cleanedText
+      );
+
+      return {
+        documentation: [],
+        youtube: [],
+        practicePlatforms: [],
+        projectIdeas: [],
+        courses: [],
+      };
+    }
+  };

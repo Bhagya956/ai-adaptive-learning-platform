@@ -29,6 +29,8 @@ import portfolioAnalyzerRoutes
 from "./routes/portfolioAnalyzer.routes";
 import mockInterviewRoutes
 from "./routes/mockInterview.routes";
+import resourceRecommendationRoutes
+from "./routes/resourceRecommendation.routes";
 
 
 dotenv.config();
@@ -113,6 +115,11 @@ app.use(
 app.use(
   "/api/mock-interview",
   mockInterviewRoutes
+);
+
+app.use(
+  "/api/resource-recommendation",
+  resourceRecommendationRoutes
 );
 
 

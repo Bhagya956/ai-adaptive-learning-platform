@@ -123,6 +123,10 @@ export default function Navbar() {
   Mock Interview
 </Link>
 
+<Link href="/resource-recommendation">
+  Learning Resources
+</Link>
+
       </div>
 
     </nav>
