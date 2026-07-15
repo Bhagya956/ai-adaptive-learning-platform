@@ -5,6 +5,8 @@ import Quiz from "../models/quiz.model";
 import {
   generateQuiz,
 } from "../services/quiz.service";
+import { logActivity }
+from "../utils/activityLogger";
 
 export const createQuiz = async (
   req: any,
@@ -31,6 +33,11 @@ export const createQuiz = async (
         topic,
         questions,
       });
+      await logActivity(
+  req.user.id,
+  "QUIZ",
+  "Generated AI Quiz"
+);
 
     return res.status(201).json(
       quiz

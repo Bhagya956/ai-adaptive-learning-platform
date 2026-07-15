@@ -6,6 +6,8 @@ import {
   generateMockInterviewQuestions,
   evaluateMockInterview,
 } from "../services/gemini.service";
+import { logActivity }
+from "../utils/activityLogger";
 
 export const generateInterview =
   async (
@@ -30,6 +32,12 @@ export const generateInterview =
           role,
           questions,
         });
+
+        await logActivity(
+  req.user.id,
+  "MOCK_INTERVIEW",
+  "Generated Mock Interview"
+);
 
       return res
         .status(200)
@@ -92,6 +100,12 @@ export const submitInterview =
         evaluation.feedback;
 
       await interview.save();
+
+      await logActivity(
+  req.user.id,
+  "MOCK_INTERVIEW",
+  "Completed Mock Interview"
+);
 
       return res
         .status(200)

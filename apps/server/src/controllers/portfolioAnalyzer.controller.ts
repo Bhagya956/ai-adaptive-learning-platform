@@ -11,6 +11,9 @@ import {
   analyzePortfolioWithAI,
 } from "../services/gemini.service";
 
+import { logActivity }
+from "../utils/activityLogger";
+
 export const analyzePortfolio =
   async (
     req: any,
@@ -79,6 +82,12 @@ export const analyzePortfolio =
               aiAnalysis.analysis,
           }
         );
+
+        await logActivity(
+  req.user.id,
+  "PORTFOLIO_ANALYSIS",
+  "Analyzed GitHub Portfolio"
+);
 
       return res.status(200).json(
         savedAnalysis

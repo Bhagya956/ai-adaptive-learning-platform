@@ -32,6 +32,8 @@ from "./routes/mockInterview.routes";
 import resourceRecommendationRoutes
 from "./routes/resourceRecommendation.routes";
 
+import activityRoutes
+from "./routes/activity.routes";
 
 dotenv.config();
 
@@ -120,6 +122,10 @@ app.use(
 app.use(
   "/api/resource-recommendation",
   resourceRecommendationRoutes
+);
+app.use(
+  "/api/activity",
+  activityRoutes
 );
 
 

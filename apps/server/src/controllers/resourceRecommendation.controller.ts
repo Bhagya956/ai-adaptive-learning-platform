@@ -6,6 +6,8 @@ from "../models/resourceRecommendation.model";
 import {
   generateLearningResources,
 } from "../services/gemini.service";
+import { logActivity }
+from "../utils/activityLogger";
 
 export const generateResourceRecommendation =
   async (
@@ -43,6 +45,12 @@ export const generateResourceRecommendation =
           courses:
             resources.courses,
         });
+
+        await logActivity(
+  req.user.id,
+  "RESOURCE_RECOMMENDATION",
+  "Generated Learning Resources"
+);
 
       return res.status(200).json(
         savedRecommendation

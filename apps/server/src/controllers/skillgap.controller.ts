@@ -5,6 +5,8 @@ import SkillGapAnalysis from "../models/skillgap.model";
 
 import { generateSkillGapAnalysis }
 from "../services/skillgap.service";
+import { logActivity }
+from "../utils/activityLogger";
 
 export const analyzeSkillGap = async (
   req: any,
@@ -41,6 +43,11 @@ if (!analysis) {
       targetRole,
       analysis,
     });
+    await logActivity(
+  req.user.id,
+  "SKILL_GAP",
+  "Generated Skill Gap Analysis"
+);
 
     return res.status(200).json({
       analysis,

@@ -127,6 +127,10 @@ export default function Navbar() {
   Learning Resources
 </Link>
 
+<Link href="/activity">
+  Activity Timeline
+</Link>
+
       </div>
 
     </nav>

@@ -6,6 +6,8 @@ import SkillGapAnalysis from "../models/skillgap.model";
 import Learning from "../models/learning.model";
 import Quiz from "../models/quiz.model";
 import JobReadiness from "../models/jobReadiness.model";
+import { logActivity }
+from "../utils/activityLogger";
 
 export const generateJobReadinessScore =
   async (
@@ -189,6 +191,11 @@ export const generateJobReadinessScore =
           recommendations,
         });
 
+await logActivity(
+  req.user.id,
+  "JOB_READINESS",
+  "Generated Job Readiness Score"
+);
 
 
       return res.status(200).json(

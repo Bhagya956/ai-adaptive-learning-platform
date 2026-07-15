@@ -3,6 +3,8 @@ import pdfParse from "pdf-parse";
 
 import { analyzeResumeWithAI } from "../services/resume.service";
 import ResumeAnalysis from "../models/resume.model";
+import { logActivity }
+from "../utils/activityLogger";
 
 export const analyzeResume = async (
   req: any,
@@ -33,14 +35,20 @@ export const analyzeResume = async (
       });
     }
 
-    await ResumeAnalysis.create({
-      userId,
-      analysis,
-    });
+  await ResumeAnalysis.create({
+  userId,
+  analysis,
+});
 
-    return res.status(200).json({
-      analysis,
-    });
+await logActivity(
+  userId,
+  "RESUME",
+  "Generated Resume Analysis"
+);
+
+return res.status(200).json({
+  analysis,
+});
   } catch (error) {
     console.error(error);
 

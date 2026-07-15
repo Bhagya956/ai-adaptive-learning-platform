@@ -8,6 +8,9 @@ import {
   generateProjectRecommendations,
 } from "../services/gemini.service";
 
+import { logActivity }
+from "../utils/activityLogger";
+
 export const generateProjects =
   async (
     req: any,
@@ -57,6 +60,12 @@ export const generateProjects =
          console.log(
   "Career Goal:",
   user.careerGoal
+);
+
+await logActivity(
+  req.user.id,
+  "PROJECT_RECOMMENDATION",
+  "Generated Project Recommendations"
 );
       return res.status(201).json(
         saved
