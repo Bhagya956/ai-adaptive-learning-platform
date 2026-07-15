@@ -119,6 +119,10 @@ export default function Navbar() {
   Portfolio Analyzer
 </Link>
 
+<Link href="/mock-interview">
+  Mock Interview
+</Link>
+
       </div>
 
     </nav>

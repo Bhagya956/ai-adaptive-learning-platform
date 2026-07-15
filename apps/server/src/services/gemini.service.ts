@@ -191,3 +191,125 @@ Return ONLY valid JSON.
       };
     }
   };
+
+  export const generateMockInterviewQuestions =
+  async (
+    role: string
+  ): Promise<string[]> => {
+
+    const prompt = `
+You are an expert technical interviewer.
+
+Generate 10 interview questions for:
+
+${role}
+
+Return ONLY valid JSON.
+
+[
+  "Question 1",
+  "Question 2",
+  "Question 3"
+]
+`;
+
+    const response =
+      await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+
+    const text =
+      response.text ?? "[]";
+
+    const cleanedText =
+      text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+    try {
+      return JSON.parse(
+        cleanedText
+      );
+    } catch (error) {
+
+      console.error(
+        "INTERVIEW QUESTIONS JSON ERROR:",
+        cleanedText
+      );
+
+      return [];
+    }
+  };
+
+
+  export const evaluateMockInterview =
+  async (
+    role: string,
+    questions: string[],
+    answers: string[]
+  ): Promise<any> => {
+
+    const prompt = `
+You are an expert technical interviewer.
+
+Role:
+${role}
+
+Questions:
+${JSON.stringify(
+  questions
+)}
+
+Answers:
+${JSON.stringify(
+  answers
+)}
+
+Evaluate the candidate.
+
+Return ONLY valid JSON.
+
+{
+  "score": 0,
+  "strengths": [],
+  "weaknesses": [],
+  "feedback": []
+}
+`;
+
+    const response =
+      await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+
+    const text =
+      response.text ?? "{}";
+
+    const cleanedText =
+      text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+    try {
+      return JSON.parse(
+        cleanedText
+      );
+    } catch (error) {
+
+      console.error(
+        "INTERVIEW EVALUATION JSON ERROR:",
+        cleanedText
+      );
+
+      return {
+        score: 0,
+        strengths: [],
+        weaknesses: [],
+        feedback: [],
+      };
+    }
+  };
