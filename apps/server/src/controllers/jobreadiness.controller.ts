@@ -5,7 +5,7 @@ import ResumeAnalysis from "../models/resume.model";
 import SkillGapAnalysis from "../models/skillgap.model";
 import Learning from "../models/learning.model";
 import Quiz from "../models/quiz.model";
-import JobReadiness from "../models/jobReadiness.model";
+import JobReadiness from "../models/jobreadiness.model";
 import { logActivity }
 from "../utils/activityLogger";
 

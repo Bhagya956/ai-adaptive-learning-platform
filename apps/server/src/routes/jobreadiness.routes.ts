@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/auth.middleware";
 import {
   generateJobReadinessScore,
   getJobReadinessHistory,
-} from "../controllers/jobReadiness.controller";
+} from "../controllers/jobreadiness.controller";
 
 const router = express.Router();
 
