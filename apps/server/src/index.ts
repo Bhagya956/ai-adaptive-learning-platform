@@ -34,6 +34,10 @@ from "./routes/resourceRecommendation.routes";
 
 import activityRoutes
 from "./routes/activity.routes";
+import learningAnalyticsRoutes
+from "./routes/learningAnalytics.routes";
+import { getMostMissingSkills } from "./controllers/adminanalytics.controller";
+
 
 dotenv.config();
 
@@ -127,7 +131,21 @@ app.use(
   "/api/activity",
   activityRoutes
 );
+app.use(
+  "/api/learning-analytics",
+  learningAnalyticsRoutes
+);
 
+app.use(
+  "/api/admin",
+  adminAnalyticsRoutes
+);
+
+app.use(
+  "/api/admin/most-missing-skills",
+    getMostMissingSkills
+
+)
 
 
 const PORT = process.env.PORT || 5000;

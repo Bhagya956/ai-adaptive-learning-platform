@@ -131,6 +131,10 @@ export default function Navbar() {
   Activity Timeline
 </Link>
 
+<Link href="/learning-analytics">
+  Learning Analytics
+</Link>
+
       </div>
 
     </nav>

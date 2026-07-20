@@ -3,7 +3,9 @@ import express from "express";
 import authMiddleware from "../middleware/auth.middleware";
 
 import {
+  getActivityAnalytics,
   getAdminAnalytics,
+  getMostMissingSkills,
   getPopularCareerGoals,
   getPopularSkills,
   getUserGrowth,
@@ -40,6 +42,16 @@ router.get(
   authMiddleware,
   adminMiddleware,
   getUserGrowth
+);
+
+router.get(
+  "/most-missing-skills",
+  getMostMissingSkills
+);
+
+router.get(
+  "/activity-analytics",
+  getActivityAnalytics
 );
 
 export default router;

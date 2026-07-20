@@ -9,33 +9,37 @@ export const generateSkillGapAnalysis =
     profileData: any,
     targetRole: string
   ) => {
+
     const prompt = `
 You are a career mentor.
 
-Current Profile:
-Name: ${profileData.name}
-
 Current Skills:
-${profileData.skills.join(", ")}
+${profileData.skills?.join(", ")}
 
 Current Role:
 ${profileData.currentRole}
 
 Experience:
-${profileData.experience} years
+${profileData.experience}
 
 Target Role:
 ${targetRole}
 
-Analyze:
+Return ONLY valid JSON.
 
-1. Missing skills
-2. Technologies to learn
-3. Learning sequence
-4. Estimated timeline
-5. Practical project suggestions
+{
+  "analysis":"Detailed analysis",
 
-Provide a structured response.
+  "missingSkills":[
+    "Skill 1",
+    "Skill 2"
+  ],
+
+  "recommendations":[
+    "Recommendation 1",
+    "Recommendation 2"
+  ]
+}
 `;
 
     const response =
@@ -44,6 +48,33 @@ Provide a structured response.
         contents: prompt,
       });
 
-    // return response.text;
-    return response.text ?? "";
-  };
+    const text =
+      response.text ?? "{}";
+
+    const cleanedText =
+      text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+    try {
+
+      return JSON.parse(
+        cleanedText
+      );
+
+    } catch (error) {
+
+      console.error(
+        "SKILL GAP JSON ERROR:",
+        cleanedText
+      );
+
+      return {
+        analysis:
+          "Failed to generate analysis",
+        missingSkills: [],
+        recommendations: [],
+      };
+    }
+};

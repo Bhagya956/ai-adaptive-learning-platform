@@ -26,32 +26,40 @@ export const analyzeSkillGap = async (
       });
     }
 
- const analysis =
+const result =
   await generateSkillGapAnalysis(
     user,
     targetRole
   );
 
-if (!analysis) {
+if (!result) {
   return res.status(500).json({
     message: "Failed to generate analysis",
   });
 }
 
-    await SkillGapAnalysis.create({
-      userId,
-      targetRole,
-      analysis,
-    });
+await SkillGapAnalysis.create({
+  userId,
+  targetRole,
+
+  analysis:
+    result.analysis,
+
+  missingSkills:
+    result.missingSkills,
+
+  recommendations:
+    result.recommendations,
+});
     await logActivity(
   req.user.id,
   "SKILL_GAP",
   "Generated Skill Gap Analysis"
 );
 
-    return res.status(200).json({
-      analysis,
-    });
+return res.status(200).json(
+  result
+);
   } catch (error) {
     console.error(error);
 
