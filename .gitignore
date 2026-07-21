@@ -1,5 +1,16 @@
 node_modules
-.env
+**/node_modules
+
 .next
+**/.next
+
 dist
+**/dist
+
+.turbo
+**/.turbo
+
+.env
+.env.local
+
 coverage
