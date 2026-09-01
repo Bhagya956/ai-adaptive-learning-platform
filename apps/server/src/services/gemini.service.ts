@@ -10,8 +10,14 @@ console.log(
 
 import { GoogleGenAI } from "@google/genai";
 
+// httpOptions.timeout is required in Node 24 so the SDK passes an AbortSignal
+// to the underlying fetch call. Without it the SDK calls fetch() with no signal,
+// which hits undici's internal 10 s connectTimeout before the TCP handshake
+// completes — even though the endpoint is reachable. 60 s gives enough headroom
+// for Gemini's generative calls while still failing fast on real outages.
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY!,
+  httpOptions: { timeout: 60000 },
 });
 
 
@@ -321,20 +327,35 @@ Return ONLY valid JSON.
   ): Promise<any> => {
 
     const prompt = `
-Recommend learning resources for:
+You are a learning resource curator.
 
-Skill:
-${skill}
+Recommend learning resources for the following skill: ${skill}
 
-Return ONLY valid JSON.
+Return ONLY valid JSON with NO explanation or markdown. Use exactly this structure:
 
 {
-  "documentation": [],
-  "youtube": [],
-  "practicePlatforms": [],
-  "projectIdeas": [],
-  "courses": []
+  "documentation": [
+    { "name": "Resource name", "description": "One sentence description", "url": "https://..." }
+  ],
+  "youtube": [
+    { "name": "Channel or video title", "description": "One sentence description", "url": "https://youtube.com/..." }
+  ],
+  "practicePlatforms": [
+    { "name": "Platform name", "description": "One sentence description", "url": "https://..." }
+  ],
+  "projectIdeas": [
+    { "name": "Project title", "description": "One sentence description of what to build", "url": "" }
+  ],
+  "courses": [
+    { "name": "Course title and platform", "description": "One sentence description", "url": "https://..." }
+  ]
 }
+
+Rules:
+- Each array must contain 3 to 5 items.
+- Every item must have "name", "description", and "url" fields.
+- "url" may be an empty string only for projectIdeas where no specific URL applies.
+- Do not include any text outside the JSON object.
 `;
 
     const response =
@@ -353,9 +374,39 @@ Return ONLY valid JSON.
         .trim();
 
     try {
-      return JSON.parse(
-        cleanedText
-      );
+      const parsed = JSON.parse(cleanedText);
+
+      // Normalise: ensure every item in every category is an object with name/description/url.
+      // If Gemini returns a plain string for any item, coerce it into the expected shape.
+      const categories = [
+        "documentation",
+        "youtube",
+        "practicePlatforms",
+        "projectIdeas",
+        "courses",
+      ] as const;
+
+      for (const cat of categories) {
+        if (!Array.isArray(parsed[cat])) {
+          parsed[cat] = [];
+          continue;
+        }
+        parsed[cat] = parsed[cat]
+          .filter(Boolean)
+          .map((item: any) => {
+            if (typeof item === "string") {
+              // Gemini returned a plain string — wrap it so Mongoose is happy
+              return { name: item, description: "", url: "" };
+            }
+            return {
+              name: item.name ?? item.title ?? "Resource",
+              description: item.description ?? "",
+              url: item.url ?? item.link ?? "",
+            };
+          });
+      }
+
+      return parsed;
     } catch (error) {
 
       console.error(

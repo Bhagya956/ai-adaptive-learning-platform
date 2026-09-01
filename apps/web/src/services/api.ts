@@ -6,16 +6,17 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token =
-      JSON.parse(
-        localStorage.getItem(
-          "auth-storage"
-        ) || "{}"
-      )?.state?.token;
+    try {
+      const token =
+        JSON.parse(
+          localStorage.getItem("auth-storage") || "{}"
+        )?.state?.token;
 
-    if (token) {
-      config.headers.Authorization =
-        `Bearer ${token}`;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch {
+      // localStorage unavailable or malformed — proceed without auth header
     }
 
     return config;

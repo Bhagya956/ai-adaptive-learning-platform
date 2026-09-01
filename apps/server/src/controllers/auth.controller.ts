@@ -8,7 +8,7 @@ export const registerUser = async (
   res: Response
 ) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // check existing user
     const existingUser = await User.findOne({ email });
@@ -19,32 +19,33 @@ export const registerUser = async (
       });
     }
 
-    // create new user
-   // hash password
-const hashedPassword = await bcrypt.hash(password, 10);
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-// create user
-const user = await User.create({
-  name,
-  email,
-  password: hashedPassword,
-});
+    // Only accept known non-admin roles from self-registration.
+    // "admin" cannot be self-assigned.
+    const allowedRoles = ["student", "educator", "organization"];
+    const assignedRole = allowedRoles.includes(role) ? role : "student";
 
-    // res.status(201).json({
-    //   message: "User registered successfully",
-    //   user,
-    // });
+    // create user
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: assignedRole,
+    });
+
     const userResponse = {
-  _id: user._id,
-  name: user.name,
-  email: user.email,
-  role: user.role,
-};
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
 
-res.status(201).json({
-  message: "User registered successfully",
-  user: userResponse,
-});
+    res.status(201).json({
+      message: "User registered successfully",
+      user: userResponse,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Server error",
