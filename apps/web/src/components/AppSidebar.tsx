@@ -59,6 +59,7 @@ const studentNav: NavItem[] = [
     children: [
       { label: "AI Quiz", href: "/quiz", icon: <Zap size={14} /> },
       { label: "Quiz History", href: "/quiz/history", icon: <ClipboardList size={14} /> },
+      { label: "Assigned Assessments", href: "/quiz/assigned", icon: <ClipboardList size={14} /> },
       { label: "Mock Interview", href: "/mock-interview", icon: <Mic2 size={14} /> },
     ],
   },
@@ -105,25 +106,24 @@ const educatorNav: NavItem[] = [
     label: "Learners",
     icon: <Users size={16} />,
     children: [
-      { label: "My Learners", href: "/learning", icon: <ClipboardList size={14} /> },
-      { label: "Learning Resources", href: "/resource-recommendation", icon: <Layers size={14} /> },
+      { label: "My Learners", href: "/educator/learners", icon: <Users size={14} /> },
+      { label: "Learning Tracker", href: "/educator/learning-tracker", icon: <ClipboardList size={14} /> },
     ],
   },
   {
-    label: "Assessment",
+    label: "Assessments",
     icon: <Brain size={16} />,
     children: [
-      { label: "AI Quiz", href: "/quiz", icon: <Zap size={14} /> },
-      { label: "Quiz History", href: "/quiz/history", icon: <ClipboardList size={14} /> },
-      { label: "Mock Interview", href: "/mock-interview", icon: <Mic2 size={14} /> },
+      { label: "Assessments", href: "/educator/assessments", icon: <ClipboardList size={14} /> },
+      { label: "Create Assessment", href: "/educator/assessments/create", icon: <Zap size={14} /> },
     ],
   },
   {
     label: "Analytics",
     icon: <BarChart2 size={16} />,
     children: [
-      { label: "Learning Analytics", href: "/learning-analytics", icon: <PieChart size={14} /> },
-      { label: "Activity Timeline", href: "/activity", icon: <Activity size={14} /> },
+      { label: "Learning Analytics", href: "/educator/analytics", icon: <PieChart size={14} /> },
+      { label: "Activity Timeline", href: "/educator/activity", icon: <Activity size={14} /> },
     ],
   },
   { label: "AI Assistant", href: "/ai-assistant", icon: <Sparkles size={16} /> },
@@ -133,31 +133,39 @@ const educatorNav: NavItem[] = [
 const organizationNav: NavItem[] = [
   { label: "Dashboard", href: "/organization/dashboard", icon: <LayoutDashboard size={16} /> },
   {
-    label: "Users & Learners",
+    label: "Mentors",
     icon: <Users size={16} />,
     children: [
-      { label: "Learning Tracker", href: "/learning", icon: <ClipboardList size={14} /> },
-      { label: "Activity Timeline", href: "/activity", icon: <Activity size={14} /> },
+      { label: "All Mentors", href: "/organization/mentors", icon: <Users size={14} /> },
+      { label: "Add Mentor",  href: "/organization/mentors/create", icon: <ClipboardList size={14} /> },
+    ],
+  },
+  {
+    label: "Students",
+    icon: <Users size={16} />,
+    children: [
+      { label: "All Students", href: "/organization/students",        icon: <Users size={14} /> },
+      { label: "Add Student",  href: "/organization/students/create", icon: <ClipboardList size={14} /> },
+      { label: "Assignments",  href: "/organization/assignments",     icon: <ClipboardList size={14} /> },
+    ],
+  },
+  {
+    label: "Assessments",
+    icon: <Brain size={16} />,
+    children: [
+      { label: "Assessments", href: "/organization/assessments", icon: <ClipboardList size={14} /> },
     ],
   },
   {
     label: "Analytics",
     icon: <BarChart2 size={16} />,
     children: [
-      { label: "Learning Analytics", href: "/learning-analytics", icon: <PieChart size={14} /> },
-      { label: "Skill Gap Analysis", href: "/skill-gap", icon: <TrendingUp size={14} /> },
-    ],
-  },
-  {
-    label: "Career",
-    icon: <Briefcase size={16} />,
-    children: [
-      { label: "Job Readiness", href: "/job-readiness", icon: <GraduationCap size={14} /> },
-      { label: "Career Roadmap", href: "/roadmap", icon: <Map size={14} /> },
+      { label: "Organization Analytics", href: "/organization/analytics", icon: <PieChart size={14} /> },
+      { label: "Organization Activity",  href: "/organization/activity",  icon: <Activity size={14} /> },
     ],
   },
   { label: "AI Assistant", href: "/ai-assistant", icon: <Sparkles size={16} /> },
-  { label: "Profile", href: "/profile", icon: <User size={16} /> },
+  { label: "Profile",      href: "/profile",       icon: <User size={16} /> },
 ];
 
 function NavGroup({

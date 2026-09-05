@@ -35,6 +35,13 @@ export const registerUser = async (
       role: assignedRole,
     });
 
+    // generate token so the frontend can auto-login immediately after registration
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "7d" }
+    );
+
     const userResponse = {
       _id: user._id,
       name: user.name,
@@ -44,6 +51,7 @@ export const registerUser = async (
 
     res.status(201).json({
       message: "User registered successfully",
+      token,
       user: userResponse,
     });
   } catch (error) {

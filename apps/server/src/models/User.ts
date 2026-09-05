@@ -54,6 +54,22 @@ education: {
   type: String,
   default: "",
 },
+
+// For students only: the educator who has assigned/connected this student.
+// null means the student is independent (no educator).
+educatorId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "User",
+  default: null,
+},
+
+// For students and educators: the organization they belong to.
+// null means independent (not part of any organization).
+organizationId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "User",
+  default: null,
+},
   },
   {
     timestamps: true,

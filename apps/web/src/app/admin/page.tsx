@@ -32,7 +32,14 @@ export default function AdminPage() {
       api.get("/admin-analytics/skills").then((r) => setSkills(r.data)),
       api.get("/admin-analytics/career-goals").then((r) => setCareerGoals(r.data)),
       api.get("/admin-analytics/user-growth").then((r) => setUserGrowth(r.data)),
-      api.get("/admin-analytics/activity-analytics").then((r) => setActivityAnalytics(r.data)),
+      api.get("/admin-analytics/activity-analytics").then((r) => {
+        // Backend returns a plain object { QUIZ: 5, ... } — convert to entries array
+        const raw = r.data;
+        const entries = Array.isArray(raw)
+          ? raw
+          : Object.entries(raw as Record<string, number>).sort((a, b) => b[1] - a[1]);
+        setActivityAnalytics(entries);
+      }),
     ])
       .catch(console.error)
       .finally(() => setLoading(false));

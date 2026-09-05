@@ -36,6 +36,9 @@ import activityRoutes
 from "./routes/activity.routes";
 import learningAnalyticsRoutes
 from "./routes/learningAnalytics.routes";
+import educatorRoutes from "./routes/educator.routes";
+import studentRoutes from "./routes/student.routes";
+import organizationRoutes from "./routes/organization.routes";
 import { getMostMissingSkills } from "./controllers/adminanalytics.controller";
 
 
@@ -135,6 +138,9 @@ app.use(
   "/api/learning-analytics",
   learningAnalyticsRoutes
 );
+app.use("/api/educator", educatorRoutes);
+app.use("/api/student", studentRoutes);
+app.use("/api/organization", organizationRoutes);
 
 app.use(
   "/api/admin",
