@@ -18,18 +18,19 @@ export const generateInterview =
       const userId =
         req.user.id;
 
-      const { role } =
-        req.body;
+      const { role, level } = req.body;
 
       const questions =
         await generateMockInterviewQuestions(
-          role
+          role,
+          level ?? "intermediate"
         );
 
       const interview =
         await MockInterview.create({
           userId,
           role,
+          level: level ?? "intermediate",
           questions,
         });
 

@@ -45,21 +45,28 @@ interface NavItem {
 const studentNav: NavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: <LayoutDashboard size={16} /> },
   {
-    label: "Learning",
+    label: "Analytics",
+    icon: <BarChart2 size={16} />,
+    children: [
+      { label: "Learning Analytics", href: "/learning-analytics", icon: <PieChart size={14} /> },
+      { label: "Activity Timeline",  href: "/activity",           icon: <Activity size={14} /> },
+    ],
+  },
+  {
+    label: "My Learning",
     icon: <BookOpen size={16} />,
     children: [
-      { label: "My Learning", href: "/learning", icon: <ClipboardList size={14} /> },
-      { label: "Resources", href: "/resource-recommendation", icon: <Layers size={14} /> },
-      { label: "Career Roadmap", href: "/roadmap", icon: <Map size={14} /> },
+      { label: "Tasks",          href: "/learning",                icon: <ClipboardList size={14} /> },
+      { label: "Resources",      href: "/resource-recommendation", icon: <Layers size={14} /> },
+      { label: "Career Roadmap", href: "/roadmap",                 icon: <Map size={14} /> },
     ],
   },
   {
     label: "Assessment",
     icon: <Brain size={16} />,
     children: [
-      { label: "AI Quiz", href: "/quiz", icon: <Zap size={14} /> },
-      { label: "Quiz History", href: "/quiz/history", icon: <ClipboardList size={14} /> },
-      { label: "Assigned Assessments", href: "/quiz/assigned", icon: <ClipboardList size={14} /> },
+      { label: "Practice Quiz",  href: "/quiz",           icon: <Zap size={14} /> },
+      { label: "Quiz History",   href: "/quiz/history",   icon: <ClipboardList size={14} /> },
       { label: "Mock Interview", href: "/mock-interview", icon: <Mic2 size={14} /> },
     ],
   },
@@ -67,30 +74,20 @@ const studentNav: NavItem[] = [
     label: "Skills",
     icon: <Target size={16} />,
     children: [
-      { label: "Skill Gap Analysis", href: "/skill-gap", icon: <TrendingUp size={14} /> },
-      { label: "Project Ideas", href: "/project-recommendation", icon: <FolderKanban size={14} /> },
+      { label: "Skill Gap Analysis", href: "/skill-gap",              icon: <TrendingUp size={14} /> },
+      { label: "Project Ideas",      href: "/project-recommendation", icon: <FolderKanban size={14} /> },
     ],
   },
   {
     label: "Career",
     icon: <Briefcase size={16} />,
     children: [
-      { label: "Resume Analysis", href: "/resume", icon: <FileText size={14} /> },
-      { label: "Interview Prep", href: "/interview-prep", icon: <Mic2 size={14} /> },
-      { label: "Job Readiness", href: "/job-readiness", icon: <GraduationCap size={14} /> },
-      { label: "Portfolio Analyzer", href: "/portfolio-analyzer", icon: <GitBranch size={14} /> },
-    ],
-  },
-  {
-    label: "Analytics",
-    icon: <BarChart2 size={16} />,
-    children: [
-      { label: "Learning Analytics", href: "/learning-analytics", icon: <PieChart size={14} /> },
-      { label: "Activity Timeline", href: "/activity", icon: <Activity size={14} /> },
+      { label: "Resume Analysis",  href: "/resume",             icon: <FileText size={14} /> },
+      { label: "Portfolio",        href: "/portfolio-analyzer", icon: <GitBranch size={14} /> },
     ],
   },
   { label: "AI Assistant", href: "/ai-assistant", icon: <Sparkles size={16} /> },
-  { label: "Profile", href: "/profile", icon: <User size={16} /> },
+  { label: "Profile",      href: "/profile",       icon: <User size={16} /> },
 ];
 
 const adminNav: NavItem[] = [
@@ -253,14 +250,32 @@ export default function AppSidebar() {
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems =
-    user?.role === "admin"
-      ? adminNav
-      : user?.role === "educator"
-      ? educatorNav
-      : user?.role === "organization"
-      ? organizationNav
-      : studentNav;
+  const navItems = (() => {
+    if (user?.role === "admin")        return adminNav;
+    if (user?.role === "educator")     return educatorNav;
+    if (user?.role === "organization") return organizationNav;
+
+    // Student: conditionally add "Assigned Assessments" for non-independent students
+    if (user?.educatorId || user?.organizationId) {
+      return studentNav.map((item) => {
+        if (item.label === "Assessment" && item.children) {
+          const hasAssigned = item.children.some((c) => c.href === "/quiz/assigned");
+          if (!hasAssigned) {
+            return {
+              ...item,
+              children: [
+                ...item.children,
+                { label: "Assigned Assessments", href: "/quiz/assigned", icon: <ClipboardList size={14} /> },
+              ],
+            };
+          }
+        }
+        return item;
+      });
+    }
+
+    return studentNav;
+  })();
   const initials = user?.name
     ? user.name
         .split(" ")

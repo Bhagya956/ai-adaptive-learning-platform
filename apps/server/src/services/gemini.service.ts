@@ -200,7 +200,8 @@ Return ONLY valid JSON.
 
   export const generateMockInterviewQuestions =
   async (
-    role: string
+    role: string,
+    level: string = "intermediate"
   ): Promise<string[]> => {
 
     const prompt = `
@@ -208,7 +209,13 @@ You are an expert technical interviewer.
 
 Generate 10 interview questions for:
 
-${role}
+Role: ${role}
+Level: ${level}
+
+Rules:
+- If level is "beginner": ask foundational, conceptual questions suitable for someone with little experience.
+- If level is "intermediate": ask practical, applied questions for someone with 1-3 years of experience.
+- If level is "experienced": ask advanced, scenario-based, and depth questions for a senior candidate.
 
 Return ONLY valid JSON.
 

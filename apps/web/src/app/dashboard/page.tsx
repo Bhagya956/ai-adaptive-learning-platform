@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Map, FileText, Target, Mic2, Briefcase, BookOpen,
-  Brain, BarChart2, ArrowRight, Sparkles, TrendingUp,
+  Brain, BarChart2, ArrowRight, TrendingUp,
   ClipboardList, Activity, Zap,
 } from "lucide-react";
 import { getDashboardStats } from "@/src/lib/dashboard";
@@ -18,21 +18,21 @@ import Button from "@/src/components/ui/Button";
 import { useState } from "react";
 
 const quickActions = [
-  { label: "Generate Roadmap", href: "/roadmap", icon: Map, color: "bg-indigo-50 text-indigo-600 hover:bg-indigo-100" },
-  { label: "Analyze Resume", href: "/resume", icon: FileText, color: "bg-blue-50 text-blue-600 hover:bg-blue-100" },
-  { label: "Skill Gap Check", href: "/skill-gap", icon: Target, color: "bg-rose-50 text-rose-600 hover:bg-rose-100" },
-  { label: "Take a Quiz", href: "/quiz", icon: Zap, color: "bg-amber-50 text-amber-600 hover:bg-amber-100" },
-  { label: "Mock Interview", href: "/mock-interview", icon: Mic2, color: "bg-green-50 text-green-600 hover:bg-green-100" },
-  { label: "Job Readiness", href: "/job-readiness", icon: Briefcase, color: "bg-violet-50 text-violet-600 hover:bg-violet-100" },
+  { label: "Career Roadmap",  href: "/roadmap",      icon: Map,    color: "bg-indigo-50 text-indigo-600 hover:bg-indigo-100" },
+  { label: "Resume Analysis", href: "/resume",        icon: FileText, color: "bg-blue-50 text-blue-600 hover:bg-blue-100" },
+  { label: "Skill Gap",       href: "/skill-gap",     icon: Target, color: "bg-rose-50 text-rose-600 hover:bg-rose-100" },
+  { label: "Practice Quiz",   href: "/quiz",          icon: Zap,    color: "bg-amber-50 text-amber-600 hover:bg-amber-100" },
+  { label: "Mock Interview",  href: "/mock-interview",icon: Mic2,   color: "bg-green-50 text-green-600 hover:bg-green-100" },
+  { label: "Resources",       href: "/resource-recommendation", icon: Briefcase, color: "bg-violet-50 text-violet-600 hover:bg-violet-100" },
 ];
 
 const featureLinks = [
-  { label: "Learning Tracker", href: "/learning", icon: BookOpen, desc: "Manage your tasks" },
-  { label: "Learning Analytics", href: "/learning-analytics", icon: BarChart2, desc: "View progress charts" },
-  { label: "Interview Prep", href: "/interview-prep", icon: Brain, desc: "Prepare for roles" },
-  { label: "Activity Timeline", href: "/activity", icon: Activity, desc: "See your activity" },
-  { label: "Portfolio Analyzer", href: "/portfolio-analyzer", icon: TrendingUp, desc: "Analyze GitHub" },
-  { label: "Project Ideas", href: "/project-recommendation", icon: ClipboardList, desc: "AI project recs" },
+  { label: "My Learning",        href: "/learning",          icon: BookOpen,      desc: "Tasks and progress" },
+  { label: "Learning Analytics", href: "/learning-analytics",icon: BarChart2,     desc: "View charts" },
+  { label: "Activity Timeline",  href: "/activity",          icon: Activity,      desc: "Your activity log" },
+  { label: "Portfolio",          href: "/portfolio-analyzer",icon: TrendingUp,    desc: "Analyse GitHub" },
+  { label: "Project Ideas",      href: "/project-recommendation", icon: ClipboardList, desc: "Recommended projects" },
+  { label: "Skill Gap",          href: "/skill-gap",         icon: Brain,         desc: "Find skill gaps" },
 ];
 
 export default function DashboardPage() {
@@ -79,9 +79,8 @@ export default function DashboardPage() {
             Here's a summary of your learning journey
           </p>
         </div>
-        <Badge variant="brand" size="md">
-          <Sparkles size={12} className="mr-1.5" />
-          AI-Powered Dashboard
+        <Badge variant="default" size="md">
+          Student Dashboard
         </Badge>
       </div>
 
@@ -132,16 +131,16 @@ export default function DashboardPage() {
           iconColor="text-rose-600"
           iconBg="bg-rose-50"
           href="/skill-gap/history"
-          description="Analyzed"
+          description="Analysed"
         />
         <StatCard
-          title="Interview Guides"
+          title="Mock Interviews"
           value={stats?.interviews ?? 0}
           icon={Mic2}
           iconColor="text-green-600"
           iconBg="bg-green-50"
-          href="/interview-prep/history"
-          description="Generated"
+          href="/mock-interview"
+          description="Practised"
         />
       </div>
 
@@ -152,7 +151,7 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle>Quick Actions</CardTitle>
               <p className="text-sm text-text-secondary mt-0.5">
-                Jump into any AI-powered feature
+                Jump into any feature
               </p>
             </CardHeader>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -173,26 +172,21 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Career readiness CTA */}
+        {/* Learning progress CTA */}
         <div>
-          <Card className="h-full flex flex-col bg-gradient-to-br from-brand-600 to-brand-800 border-brand-500 text-white">
+          <Card className="h-full flex flex-col">
             <div className="flex-1">
-              <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-4">
-                <Briefcase size={20} className="text-white" />
+              <div className="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center mb-4">
+                <BookOpen size={20} className="text-brand-600" />
               </div>
-              <h3 className="font-semibold text-base mb-2">Career Readiness</h3>
-              <p className="text-brand-100 text-sm leading-relaxed mb-4">
-                Check your job readiness score based on your profile, skills, and
-                activity.
+              <h3 className="font-semibold text-base text-text-primary mb-2">My Learning</h3>
+              <p className="text-text-secondary text-sm leading-relaxed mb-4">
+                Track your learning tasks, set deadlines, and monitor your progress.
               </p>
             </div>
-            <Link href="/job-readiness">
-              <Button
-                variant="secondary"
-                className="w-full bg-white text-brand-700 hover:bg-brand-50 border-transparent"
-                rightIcon={<ArrowRight size={14} />}
-              >
-                Check Score
+            <Link href="/learning">
+              <Button variant="secondary" className="w-full" rightIcon={<ArrowRight size={14} />}>
+                View Tasks
               </Button>
             </Link>
           </Card>

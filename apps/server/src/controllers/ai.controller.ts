@@ -23,8 +23,22 @@ export const getRoadmap = async (
       });
     }
 
-    const roadmap =
-      await generateRoadmap(user);
+    // Allow the frontend to pass profile overrides in the request body.
+    // This lets the roadmap page show a pre-filled form without saving to the profile.
+    const {
+      currentRole, experience, skills, interestedDomains, careerGoal, education,
+    } = req.body;
+
+    const profileData = {
+      currentRole:       currentRole       ?? (user as any).currentRole,
+      experience:        experience        ?? (user as any).experience,
+      skills:            skills            ?? (user as any).skills,
+      interestedDomains: interestedDomains ?? (user as any).interestedDomains,
+      careerGoal:        careerGoal        ?? (user as any).careerGoal,
+      education:         education         ?? (user as any).education,
+    };
+
+    const roadmap = await generateRoadmap(profileData);
 
     console.log(
       "Generated Roadmap:",

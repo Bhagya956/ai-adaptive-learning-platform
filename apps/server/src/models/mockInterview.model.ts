@@ -14,6 +14,12 @@ const mockInterviewSchema =
         required: true,
       },
 
+      level: {
+        type: String,
+        enum: ["beginner", "intermediate", "experienced"],
+        default: "intermediate",
+      },
+
       questions: [
         {
           type: String,
