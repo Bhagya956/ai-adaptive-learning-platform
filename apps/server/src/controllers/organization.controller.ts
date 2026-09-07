@@ -539,3 +539,163 @@ export const getOrgAssessments = async (req: any, res: Response) => {
     return res.status(500).json({ message: "Failed to fetch assessments." });
   }
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION: Request management (organization_student + organization_mentor)
+// ─────────────────────────────────────────────────────────────────────────────
+import RelationshipRequest from "../models/relationshipRequest.model";
+
+// ── Student requests ──────────────────────────────────────────────────────────
+
+// GET /api/organization/requests/students
+// All organization_student requests addressed to this organization.
+export const getStudentRequests = async (req: any, res: Response) => {
+  try {
+    const requests = await RelationshipRequest.find({
+      targetId: req.user.id,
+      requestType: "organization_student",
+    })
+      .sort({ createdAt: -1 })
+      .populate("requesterId", "-password")
+      .lean();
+
+    return res.status(200).json(requests);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to fetch student requests." });
+  }
+};
+
+// POST /api/organization/requests/students/:id/accept
+// Accept a pending organization_student request.
+export const acceptStudentRequest = async (req: any, res: Response) => {
+  try {
+    const request = await RelationshipRequest.findById(req.params.id);
+    if (!request) return res.status(404).json({ message: "Request not found." });
+
+    if (request.targetId.toString() !== req.user.id.toString())
+      return res.status(403).json({ message: "Access denied." });
+    if (request.requestType !== "organization_student")
+      return res.status(400).json({ message: "Invalid request type." });
+    if (request.status !== "pending")
+      return res.status(409).json({ message: `Request is already ${request.status}.` });
+
+    // Activate student; keep organizationId that was set at registration.
+    // educatorId stays null — org will assign mentor separately via existing assignMentor endpoint.
+    await User.findByIdAndUpdate(request.requesterId, {
+      accountStatus: "active",
+      organizationId: req.user.id, // ensure correct org even if somehow mismatched
+    });
+
+    request.status = "accepted";
+    request.reviewedAt = new Date();
+    await request.save();
+
+    return res.status(200).json({ message: "Student request accepted." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to accept student request." });
+  }
+};
+
+// POST /api/organization/requests/students/:id/reject
+export const rejectStudentRequest = async (req: any, res: Response) => {
+  try {
+    const request = await RelationshipRequest.findById(req.params.id);
+    if (!request) return res.status(404).json({ message: "Request not found." });
+
+    if (request.targetId.toString() !== req.user.id.toString())
+      return res.status(403).json({ message: "Access denied." });
+    if (request.requestType !== "organization_student")
+      return res.status(400).json({ message: "Invalid request type." });
+    if (request.status !== "pending")
+      return res.status(409).json({ message: `Request is already ${request.status}.` });
+
+    await User.findByIdAndUpdate(request.requesterId, { accountStatus: "rejected" });
+
+    request.status = "rejected";
+    request.reviewedAt = new Date();
+    await request.save();
+
+    return res.status(200).json({ message: "Student request rejected." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to reject student request." });
+  }
+};
+
+// ── Mentor requests ───────────────────────────────────────────────────────────
+
+// GET /api/organization/requests/mentors
+// All organization_mentor requests addressed to this organization.
+export const getMentorRequests = async (req: any, res: Response) => {
+  try {
+    const requests = await RelationshipRequest.find({
+      targetId: req.user.id,
+      requestType: "organization_mentor",
+    })
+      .sort({ createdAt: -1 })
+      .populate("requesterId", "-password")
+      .lean();
+
+    return res.status(200).json(requests);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to fetch mentor requests." });
+  }
+};
+
+// POST /api/organization/requests/mentors/:id/accept
+export const acceptMentorRequest = async (req: any, res: Response) => {
+  try {
+    const request = await RelationshipRequest.findById(req.params.id);
+    if (!request) return res.status(404).json({ message: "Request not found." });
+
+    if (request.targetId.toString() !== req.user.id.toString())
+      return res.status(403).json({ message: "Access denied." });
+    if (request.requestType !== "organization_mentor")
+      return res.status(400).json({ message: "Invalid request type." });
+    if (request.status !== "pending")
+      return res.status(409).json({ message: `Request is already ${request.status}.` });
+
+    await User.findByIdAndUpdate(request.requesterId, {
+      accountStatus: "active",
+      organizationId: req.user.id,
+    });
+
+    request.status = "accepted";
+    request.reviewedAt = new Date();
+    await request.save();
+
+    return res.status(200).json({ message: "Mentor request accepted." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to accept mentor request." });
+  }
+};
+
+// POST /api/organization/requests/mentors/:id/reject
+export const rejectMentorRequest = async (req: any, res: Response) => {
+  try {
+    const request = await RelationshipRequest.findById(req.params.id);
+    if (!request) return res.status(404).json({ message: "Request not found." });
+
+    if (request.targetId.toString() !== req.user.id.toString())
+      return res.status(403).json({ message: "Access denied." });
+    if (request.requestType !== "organization_mentor")
+      return res.status(400).json({ message: "Invalid request type." });
+    if (request.status !== "pending")
+      return res.status(409).json({ message: `Request is already ${request.status}.` });
+
+    await User.findByIdAndUpdate(request.requesterId, { accountStatus: "rejected" });
+
+    request.status = "rejected";
+    request.reviewedAt = new Date();
+    await request.save();
+
+    return res.status(200).json({ message: "Mentor request rejected." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to reject mentor request." });
+  }
+};

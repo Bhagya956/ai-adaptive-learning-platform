@@ -17,6 +17,22 @@ export const educatorMiddleware = async (
       return res.status(403).json({ message: "Access denied. Educator only." });
     }
 
+    // Pending/rejected accounts must not access educator APIs.
+    // Missing accountStatus is treated as "active" for backward compatibility.
+    const status = (user as any).accountStatus ?? "active";
+    if (status === "pending") {
+      return res.status(403).json({
+        message: "Your account is pending approval.",
+        accountStatus: "pending",
+      });
+    }
+    if (status === "rejected") {
+      return res.status(403).json({
+        message: "Your account request was rejected.",
+        accountStatus: "rejected",
+      });
+    }
+
     next();
   } catch (error) {
     res.status(500).json({ message: "Server error" });

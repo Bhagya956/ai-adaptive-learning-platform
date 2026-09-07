@@ -106,8 +106,9 @@ const educatorNav: NavItem[] = [
     label: "Learners",
     icon: <Users size={16} />,
     children: [
-      { label: "My Learners", href: "/educator/learners", icon: <Users size={14} /> },
-      { label: "Learning Tracker", href: "/educator/learning-tracker", icon: <ClipboardList size={14} /> },
+      { label: "My Learners",        href: "/educator/learners",            icon: <Users size={14} /> },
+      { label: "Requested Students", href: "/educator/requested-students",  icon: <ClipboardList size={14} /> },
+      { label: "Learning Tracker",   href: "/educator/learning-tracker",    icon: <ClipboardList size={14} /> },
     ],
   },
   {
@@ -136,17 +137,19 @@ const organizationNav: NavItem[] = [
     label: "Mentors",
     icon: <Users size={16} />,
     children: [
-      { label: "All Mentors", href: "/organization/mentors", icon: <Users size={14} /> },
-      { label: "Add Mentor",  href: "/organization/mentors/create", icon: <ClipboardList size={14} /> },
+      { label: "All Mentors",       href: "/organization/mentors",           icon: <Users size={14} /> },
+      { label: "Add Mentor",        href: "/organization/mentors/create",    icon: <ClipboardList size={14} /> },
+      { label: "Requested Mentors", href: "/organization/requests/mentors",  icon: <ClipboardList size={14} /> },
     ],
   },
   {
     label: "Students",
     icon: <Users size={16} />,
     children: [
-      { label: "All Students", href: "/organization/students",        icon: <Users size={14} /> },
-      { label: "Add Student",  href: "/organization/students/create", icon: <ClipboardList size={14} /> },
-      { label: "Assignments",  href: "/organization/assignments",     icon: <ClipboardList size={14} /> },
+      { label: "All Students",       href: "/organization/students",           icon: <Users size={14} /> },
+      { label: "Add Student",        href: "/organization/students/create",    icon: <ClipboardList size={14} /> },
+      { label: "Assignments",        href: "/organization/assignments",        icon: <ClipboardList size={14} /> },
+      { label: "Requested Students", href: "/organization/requests/students",  icon: <ClipboardList size={14} /> },
     ],
   },
   {

@@ -17,6 +17,22 @@ export const organizationMiddleware = async (
       return res.status(403).json({ message: "Access denied. Organization only." });
     }
 
+    // Organizations registered through public signup are always active,
+    // but guard here for consistency.
+    const status = (user as any).accountStatus ?? "active";
+    if (status === "pending") {
+      return res.status(403).json({
+        message: "Your account is pending approval.",
+        accountStatus: "pending",
+      });
+    }
+    if (status === "rejected") {
+      return res.status(403).json({
+        message: "Your account request was rejected.",
+        accountStatus: "rejected",
+      });
+    }
+
     next();
   } catch (error) {
     res.status(500).json({ message: "Server error" });

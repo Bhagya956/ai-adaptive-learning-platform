@@ -10,6 +10,9 @@ import {
   getEducatorAnalytics,
   getLearningTracker,
   getLearnerActivityTimeline,
+  getStudentRequests,
+  acceptStudentRequest,
+  rejectStudentRequest,
 } from "../controllers/educator.controller";
 import {
   createAssessment,
@@ -34,5 +37,10 @@ router.get("/activity",          authMiddleware, educatorMiddleware, getLearnerA
 router.post("/assessments",      authMiddleware, educatorMiddleware, createAssessment);
 router.get("/assessments",       authMiddleware, educatorMiddleware, getEducatorAssessments);
 router.get("/assessments/:id",   authMiddleware, educatorMiddleware, getAssessmentById);
+
+// Student request management routes
+router.get("/requests",                    authMiddleware, educatorMiddleware, getStudentRequests);
+router.post("/requests/:id/accept",        authMiddleware, educatorMiddleware, acceptStudentRequest);
+router.post("/requests/:id/reject",        authMiddleware, educatorMiddleware, rejectStudentRequest);
 
 export default router;

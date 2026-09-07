@@ -85,6 +85,26 @@ export default function DashboardPage() {
         </Badge>
       </div>
 
+      {/* Relationship context (mentor-based / org-based students) */}
+      {user && (user.mentorName || user.organizationName) && (
+        <div className="flex flex-wrap gap-2">
+          {user.organizationName && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-violet-50 border border-violet-200 rounded-lg text-sm">
+              <span className="text-violet-500">🏢</span>
+              <span className="text-text-secondary">Organization:</span>
+              <span className="font-semibold text-text-primary">{user.organizationName}</span>
+            </div>
+          )}
+          {user.mentorName && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-sm">
+              <span className="text-emerald-500">👤</span>
+              <span className="text-text-secondary">Mentor:</span>
+              <span className="font-semibold text-text-primary">{user.mentorName}</span>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard

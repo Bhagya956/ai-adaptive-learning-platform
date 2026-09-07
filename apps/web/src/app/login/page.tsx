@@ -59,9 +59,18 @@ export default function LoginPage() {
         router.push("/dashboard");
       }
     } catch (err: any) {
-      const msg =
-        err?.response?.data?.message || "Invalid email or password. Please try again.";
-      toast.error("Login failed", msg);
+      // Handle approval-status 403 responses with specific messages
+      const status  = err?.response?.status;
+      const payload = err?.response?.data;
+
+      if (status === 403 && payload?.accountStatus === "pending") {
+        toast.error("Account pending", payload.message || "Your account is still under review.");
+      } else if (status === 403 && payload?.accountStatus === "rejected") {
+        toast.error("Account rejected", payload.message || "Your account request was rejected.");
+      } else {
+        const msg = payload?.message || "Invalid email or password. Please try again.";
+        toast.error("Login failed", msg);
+      }
     } finally {
       setIsLoading(false);
     }

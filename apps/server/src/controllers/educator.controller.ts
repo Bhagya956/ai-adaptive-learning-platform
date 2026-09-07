@@ -439,3 +439,96 @@ export const getLearnerActivityTimeline = async (req: any, res: Response) => {
     return res.status(500).json({ message: "Failed to fetch learner activity." });
   }
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION: Student request management (mentor_student requests)
+// ─────────────────────────────────────────────────────────────────────────────
+import RelationshipRequest from "../models/relationshipRequest.model";
+
+// GET /api/educator/requests
+// Returns all student requests addressed to this educator, with requester info.
+export const getStudentRequests = async (req: any, res: Response) => {
+  try {
+    const requests = await RelationshipRequest.find({
+      targetId: req.user.id,
+      requestType: "mentor_student",
+    })
+      .sort({ createdAt: -1 })
+      .populate("requesterId", "-password")
+      .lean();
+
+    return res.status(200).json(requests);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to fetch student requests." });
+  }
+};
+
+// POST /api/educator/requests/:id/accept
+// Accepts a pending mentor_student request.
+export const acceptStudentRequest = async (req: any, res: Response) => {
+  try {
+    const request = await RelationshipRequest.findById(req.params.id);
+    if (!request) return res.status(404).json({ message: "Request not found." });
+
+    // Security: this request must be addressed to the requesting educator
+    if (request.targetId.toString() !== req.user.id.toString()) {
+      return res.status(403).json({ message: "Access denied." });
+    }
+    if (request.requestType !== "mentor_student") {
+      return res.status(400).json({ message: "Invalid request type." });
+    }
+    if (request.status !== "pending") {
+      return res.status(409).json({ message: `Request is already ${request.status}.` });
+    }
+
+    // Activate the student
+    await User.findByIdAndUpdate(request.requesterId, {
+      accountStatus: "active",
+      educatorId: req.user.id,
+    });
+
+    // Mark request accepted
+    request.status = "accepted";
+    request.reviewedAt = new Date();
+    await request.save();
+
+    return res.status(200).json({ message: "Student request accepted." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to accept request." });
+  }
+};
+
+// POST /api/educator/requests/:id/reject
+// Rejects a pending mentor_student request.
+export const rejectStudentRequest = async (req: any, res: Response) => {
+  try {
+    const request = await RelationshipRequest.findById(req.params.id);
+    if (!request) return res.status(404).json({ message: "Request not found." });
+
+    if (request.targetId.toString() !== req.user.id.toString()) {
+      return res.status(403).json({ message: "Access denied." });
+    }
+    if (request.requestType !== "mentor_student") {
+      return res.status(400).json({ message: "Invalid request type." });
+    }
+    if (request.status !== "pending") {
+      return res.status(409).json({ message: `Request is already ${request.status}.` });
+    }
+
+    // Mark student as rejected — they cannot login
+    await User.findByIdAndUpdate(request.requesterId, {
+      accountStatus: "rejected",
+    });
+
+    request.status = "rejected";
+    request.reviewedAt = new Date();
+    await request.save();
+
+    return res.status(200).json({ message: "Student request rejected." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to reject request." });
+  }
+};

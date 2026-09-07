@@ -70,6 +70,16 @@ organizationId: {
   ref: "User",
   default: null,
 },
+
+// Account status for approval flow.
+// "active"   — can log in (default for existing users + independent signups)
+// "pending"  — awaiting mentor/org approval (cannot log in)
+// "rejected" — request was rejected (cannot log in)
+accountStatus: {
+  type: String,
+  enum: ["active", "pending", "rejected"],
+  default: "active",
+},
   },
   {
     timestamps: true,
