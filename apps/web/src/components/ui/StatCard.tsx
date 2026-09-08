@@ -23,39 +23,30 @@ export default function StatCard({
   description,
 }: StatCardProps) {
   const content = (
-    <div className="bg-surface rounded-xl border border-border p-5 shadow-sm hover:shadow-md hover:border-brand-100 transition-all duration-200">
+    <div className="bg-white rounded-2xl border border-border p-5 shadow-sm hover:shadow-md hover:border-brand-100 transition-all duration-200 group">
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium text-text-muted uppercase tracking-wide truncate">
+          <p className="text-xs font-medium text-text-muted uppercase tracking-wide truncate mb-1">
             {title}
           </p>
-          <p className="text-2xl font-bold text-text-primary mt-1 tabular-nums">
+          <p className="text-2xl font-bold text-text-primary tabular-nums">
             {value}
           </p>
           {description && (
-            <p className="text-xs text-text-secondary mt-1">{description}</p>
+            <p className="text-xs text-text-muted mt-0.5">{description}</p>
           )}
           {trend && (
-            <p
-              className={`text-xs font-medium mt-1 ${
-                trend.up ? "text-success" : "text-danger"
-              }`}
-            >
+            <p className={`text-xs font-medium mt-1 ${trend.up ? "text-success" : "text-danger"}`}>
               {trend.up ? "↑" : "↓"} {trend.value}
             </p>
           )}
         </div>
-        <div
-          className={`p-2.5 rounded-lg ${iconBg} ${iconColor} ml-3 shrink-0`}
-        >
-          <Icon size={20} />
+        <div className={`p-2.5 rounded-xl ${iconBg} ${iconColor} ml-3 shrink-0 group-hover:scale-105 transition-transform`}>
+          <Icon size={18} />
         </div>
       </div>
     </div>
   );
 
-  if (href) {
-    return <Link href={href}>{content}</Link>;
-  }
-  return content;
+  return href ? <Link href={href}>{content}</Link> : content;
 }

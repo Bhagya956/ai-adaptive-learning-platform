@@ -3,32 +3,33 @@
 import { forwardRef } from "react";
 import { Loader2 } from "lucide-react";
 
-interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost" | "danger" | "outline";
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "outline" | "success";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
 
-const variantClasses = {
+const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
   primary:
-    "bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800 shadow-sm",
+    "bg-gradient-to-r from-brand-600 to-blue-500 text-white shadow-sm hover:from-brand-700 hover:to-blue-600 hover:shadow-md",
   secondary:
-    "bg-surface text-text-primary border border-border hover:bg-surface-3 active:bg-surface-3",
+    "bg-white text-text-primary border border-border shadow-xs hover:bg-surface-3 hover:border-brand-200",
   ghost:
-    "text-text-secondary hover:bg-surface-3 hover:text-text-primary",
+    "text-text-secondary hover:bg-brand-50 hover:text-brand-700",
   danger:
-    "bg-danger text-white hover:bg-red-600 active:bg-red-700 shadow-sm",
+    "bg-danger text-white shadow-sm hover:bg-red-600",
   outline:
-    "border border-brand-500 text-brand-600 hover:bg-brand-50 active:bg-brand-100",
+    "border border-brand-300 text-brand-700 hover:bg-brand-50",
+  success:
+    "bg-success text-white shadow-sm hover:bg-emerald-600",
 };
 
-const sizeClasses = {
-  sm: "text-xs px-3 py-1.5 gap-1.5",
-  md: "text-sm px-4 py-2 gap-2",
-  lg: "text-base px-5 py-2.5 gap-2",
+const sizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
+  sm: "text-xs px-3 py-1.5 gap-1.5 rounded-lg",
+  md: "text-sm px-4 py-2 gap-2 rounded-xl",
+  lg: "text-sm px-5 py-2.5 gap-2 rounded-xl",
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -53,9 +54,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={isDisabled}
         className={[
-          "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 cursor-pointer select-none whitespace-nowrap",
+          "inline-flex items-center justify-center font-medium cursor-pointer select-none whitespace-nowrap",
           "disabled:opacity-50 disabled:cursor-not-allowed",
-          "focus-visible:outline-2 focus-visible:outline-brand-500 focus-visible:outline-offset-2",
+          "focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-2",
           variantClasses[variant],
           sizeClasses[size],
           className,
@@ -63,14 +64,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading ? (
-          <Loader2 size={14} className="animate-spin" />
+          <Loader2 size={14} className="animate-spin shrink-0" />
         ) : (
           leftIcon && <span className="shrink-0">{leftIcon}</span>
         )}
         {children && <span>{children}</span>}
-        {rightIcon && !loading && (
-          <span className="shrink-0">{rightIcon}</span>
-        )}
+        {rightIcon && !loading && <span className="shrink-0">{rightIcon}</span>}
       </button>
     );
   }

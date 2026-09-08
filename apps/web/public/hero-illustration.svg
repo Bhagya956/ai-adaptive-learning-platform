@@ -1,0 +1,313 @@
+<svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e0e7ff" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#ede9fe" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#f0f9ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="book1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <linearGradient id="book1side" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="book2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="book2side" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="book3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="book3side" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c78f8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="laptopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="laptopScreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c7d2fe"/>
+      <stop offset="100%" stop-color="#a5b4fc"/>
+    </linearGradient>
+    <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4338ca"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf84"/>
+      <stop offset="100%" stop-color="#f59e5b"/>
+    </linearGradient>
+    <linearGradient id="leafLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="leafRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6ee7b7"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="iconBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="iconGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6ee7b7"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="iconPurple1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="iconPurple2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#6366f1" flood-opacity="0.18"/>
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#6366f1" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background glow -->
+  <circle cx="260" cy="260" r="220" fill="url(#bgGlow)"/>
+
+  <!-- Dotted orbit circle -->
+  <circle cx="260" cy="230" r="170" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="5 7" fill="none" opacity="0.5"/>
+
+  <!-- ── Left leaves ── -->
+  <g transform="translate(62, 340)" opacity="0.9">
+    <ellipse cx="0" cy="0" rx="22" ry="52" fill="url(#leafLeft)" transform="rotate(-25)"/>
+    <ellipse cx="-12" cy="-20" rx="16" ry="38" fill="url(#leafRight)" transform="rotate(-45)" opacity="0.8"/>
+    <ellipse cx="12" cy="10" rx="14" ry="32" fill="url(#leafLeft)" transform="rotate(-10)" opacity="0.7"/>
+  </g>
+
+  <!-- ── Right leaves ── -->
+  <g transform="translate(440, 360)" opacity="0.85">
+    <ellipse cx="0" cy="0" rx="18" ry="44" fill="url(#leafRight)" transform="rotate(20)"/>
+    <ellipse cx="14" cy="-10" rx="14" ry="34" fill="url(#leafLeft)" transform="rotate(40)" opacity="0.8"/>
+    <ellipse cx="-8" cy="12" rx="12" ry="28" fill="url(#leafRight)" transform="rotate(5)" opacity="0.7"/>
+  </g>
+
+  <!-- Extra teal leaf petal bottom-left -->
+  <ellipse cx="110" cy="390" rx="14" ry="36" fill="#2dd4bf" opacity="0.5" transform="rotate(-35, 110, 390)"/>
+
+  <!-- ── Book stack ── -->
+  <!-- Book 3 bottom (blue) -->
+  <g filter="url(#shadow)">
+    <!-- Top face -->
+    <ellipse cx="260" cy="388" rx="95" ry="14" fill="url(#book3)"/>
+    <!-- Side face -->
+    <rect x="165" y="388" width="190" height="28" rx="4" fill="url(#book3side)"/>
+    <!-- Bottom rounded edge -->
+    <ellipse cx="260" cy="416" rx="95" ry="14" fill="#2563eb"/>
+  </g>
+
+  <!-- Book 2 middle (purple) -->
+  <g filter="url(#shadow)">
+    <ellipse cx="260" cy="360" rx="85" ry="12" fill="url(#book2)"/>
+    <rect x="175" y="360" width="170" height="26" rx="4" fill="url(#book2side)"/>
+    <ellipse cx="260" cy="386" rx="85" ry="12" fill="#7c3aed"/>
+    <!-- Book page lines -->
+    <line x1="175" y1="367" x2="345" y2="367" stroke="#c4b5fd" stroke-width="1" opacity="0.4"/>
+    <line x1="175" y1="373" x2="345" y2="373" stroke="#c4b5fd" stroke-width="1" opacity="0.3"/>
+  </g>
+
+  <!-- Book 1 top (indigo) -->
+  <g filter="url(#shadow)">
+    <ellipse cx="260" cy="335" rx="74" ry="11" fill="url(#book1)"/>
+    <rect x="186" y="335" width="148" height="24" rx="4" fill="url(#book1side)"/>
+    <ellipse cx="260" cy="359" rx="74" ry="11" fill="#4f46e5"/>
+    <!-- Book page lines -->
+    <line x1="186" y1="341" x2="334" y2="341" stroke="#a5b4fc" stroke-width="1" opacity="0.4"/>
+  </g>
+
+  <!-- ── Laptop ── -->
+  <!-- Laptop base -->
+  <g filter="url(#softShadow)">
+    <rect x="210" y="290" width="100" height="64" rx="8" fill="url(#laptopGrad)"/>
+    <!-- Screen -->
+    <rect x="215" y="294" width="90" height="52" rx="6" fill="url(#laptopScreen)"/>
+    <!-- Screen glare -->
+    <rect x="217" y="296" width="40" height="20" rx="4" fill="white" opacity="0.15"/>
+    <!-- Screen content lines -->
+    <rect x="220" y="320" width="50" height="3" rx="1.5" fill="white" opacity="0.3"/>
+    <rect x="220" y="327" width="35" height="3" rx="1.5" fill="white" opacity="0.2"/>
+    <rect x="220" y="334" width="42" height="3" rx="1.5" fill="white" opacity="0.2"/>
+    <!-- Keyboard area -->
+    <rect x="210" y="352" width="100" height="4" rx="2" fill="#4338ca" opacity="0.5"/>
+  </g>
+
+  <!-- ── Student body ── -->
+  <!-- Hoodie body -->
+  <g filter="url(#softShadow)">
+    <!-- Main hoodie torso -->
+    <path d="M220 280 Q210 295 205 320 Q200 340 210 355 L260 358 L310 355 Q320 340 315 320 Q310 295 300 280 Q285 268 260 266 Q235 268 220 280Z" fill="url(#bodyGrad)"/>
+    <!-- Hoodie front pocket/strings detail -->
+    <path d="M250 290 L255 315 M270 290 L265 315" stroke="#a5b4fc" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+    <ellipse cx="260" cy="285" rx="8" ry="5" fill="#6366f1" opacity="0.6"/>
+
+    <!-- Left arm -->
+    <path d="M220 285 Q195 295 190 318 Q188 328 195 330 L215 325 Q218 310 225 295Z" fill="url(#bodyGrad)"/>
+    <!-- Left hand -->
+    <ellipse cx="193" cy="332" rx="10" ry="8" fill="url(#skinGrad)"/>
+
+    <!-- Right arm -->
+    <path d="M300 285 Q325 295 330 318 Q332 328 325 330 L305 325 Q302 310 295 295Z" fill="url(#bodyGrad)"/>
+    <!-- Right hand -->
+    <ellipse cx="327" cy="332" rx="10" ry="8" fill="url(#skinGrad)"/>
+  </g>
+
+  <!-- Legs (cross-legged sitting) -->
+  <!-- Left leg -->
+  <path d="M215 345 Q195 360 185 375 Q178 388 192 392 Q205 395 218 385 Q228 372 232 355Z" fill="#312e81"/>
+  <!-- Right leg -->
+  <path d="M305 345 Q325 360 335 375 Q342 388 328 392 Q315 395 302 385 Q292 372 288 355Z" fill="#312e81"/>
+  <!-- Feet -->
+  <ellipse cx="190" cy="390" rx="18" ry="10" fill="#1e1b4b" transform="rotate(-10,190,390)"/>
+  <ellipse cx="326" cy="390" rx="18" ry="10" fill="#1e1b4b" transform="rotate(10,326,390)"/>
+  <!-- Shoe whites/soles -->
+  <path d="M178 395 Q185 400 200 398 Q205 396 200 392 Q192 390 178 393Z" fill="white" opacity="0.7"/>
+  <path d="M314 395 Q321 400 336 398 Q341 396 336 392 Q328 390 314 393Z" fill="white" opacity="0.7"/>
+
+  <!-- ── Neck + Head ── -->
+  <!-- Neck -->
+  <rect x="253" y="248" width="14" height="20" rx="5" fill="url(#skinGrad)"/>
+
+  <!-- Head -->
+  <ellipse cx="260" cy="234" rx="34" ry="36" fill="url(#skinGrad)" filter="url(#softShadow)"/>
+
+  <!-- Face details -->
+  <!-- Eyes -->
+  <ellipse cx="251" cy="230" rx="3.5" ry="4" fill="#1c1917"/>
+  <ellipse cx="269" cy="230" rx="3.5" ry="4" fill="#1c1917"/>
+  <!-- Eye shine -->
+  <circle cx="252.5" cy="228.5" r="1.2" fill="white"/>
+  <circle cx="270.5" cy="228.5" r="1.2" fill="white"/>
+  <!-- Eyebrows -->
+  <path d="M246 224 Q251 221 256 223" stroke="#1c1917" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M264 223 Q269 221 274 224" stroke="#1c1917" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Nose -->
+  <path d="M259 237 Q257 242 260 244 Q263 242 261 237" stroke="#d97706" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <!-- Smile -->
+  <path d="M251 248 Q260 255 269 248" stroke="#d97706" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Cheeks -->
+  <ellipse cx="243" cy="246" rx="8" ry="5" fill="#fca5a5" opacity="0.35"/>
+  <ellipse cx="277" cy="246" rx="8" ry="5" fill="#fca5a5" opacity="0.35"/>
+
+  <!-- Hair -->
+  <path d="M226 224 Q228 198 260 194 Q292 198 294 224 Q288 212 260 210 Q232 212 226 224Z" fill="#1c1917"/>
+  <!-- Hair side -->
+  <path d="M226 224 Q222 230 224 238 Q228 218 232 216Z" fill="#1c1917"/>
+  <path d="M294 224 Q298 230 296 238 Q292 218 288 216Z" fill="#1c1917"/>
+
+  <!-- ── Graduation cap ── -->
+  <g filter="url(#softShadow)">
+    <!-- Cap board -->
+    <rect x="222" y="195" width="76" height="10" rx="3" fill="url(#capGrad)"/>
+    <!-- Cap top dome -->
+    <path d="M235 195 Q237 178 260 176 Q283 178 285 195Z" fill="url(#capGrad)"/>
+    <!-- Cap shine -->
+    <path d="M240 185 Q247 180 256 182" stroke="#818cf8" stroke-width="1.5" opacity="0.4" fill="none"/>
+    <!-- Tassel string -->
+    <line x1="295" y1="195" x2="305" y2="220" stroke="#fbbf24" stroke-width="2"/>
+    <line x1="305" y1="220" x2="308" y2="235" stroke="#fbbf24" stroke-width="1.5"/>
+    <!-- Tassel end -->
+    <rect x="303" y="235" width="10" height="14" rx="2" fill="#fbbf24"/>
+    <line x1="305" y1="249" x2="304" y2="258" stroke="#fbbf24" stroke-width="1.5"/>
+    <line x1="308" y1="249" x2="308" y2="260" stroke="#fbbf24" stroke-width="1.5"/>
+    <line x1="311" y1="249" x2="312" y2="257" stroke="#fbbf24" stroke-width="1.5"/>
+  </g>
+
+  <!-- Sparkle stars (small 4-point stars) -->
+  <g opacity="0.7">
+    <!-- Star 1 -->
+    <path d="M150 195 L153 188 L156 195 L149 191 L157 191Z" fill="#818cf8"/>
+    <!-- Star 2 -->
+    <path d="M370 165 L373 158 L376 165 L369 161 L377 161Z" fill="#a78bfa"/>
+    <!-- Star 3 -->
+    <path d="M165 290 L167 285 L169 290 L164 287 L170 287Z" fill="#60a5fa" opacity="0.6"/>
+    <!-- Star 4 -->
+    <path d="M355 295 L357 290 L359 295 L354 292 L360 292Z" fill="#818cf8" opacity="0.6"/>
+    <!-- Star 5 small -->
+    <path d="M200 175 L202 170 L204 175 L199 172 L205 172Z" fill="#c084fc" opacity="0.5"/>
+  </g>
+
+  <!-- Purple/blue blob background shapes -->
+  <ellipse cx="180" cy="300" rx="30" ry="20" fill="#c7d2fe" opacity="0.25" transform="rotate(-20,180,300)"/>
+  <ellipse cx="340" cy="310" rx="25" ry="18" fill="#ddd6fe" opacity="0.25" transform="rotate(15,340,310)"/>
+  <circle cx="145" cy="360" r="8" fill="#60a5fa" opacity="0.3"/>
+
+  <!-- ── Floating icon cards ── -->
+
+  <!-- Card: Book (top-left) — blue/cyan -->
+  <g filter="url(#shadow)">
+    <rect x="98" y="165" width="58" height="58" rx="16" fill="url(#iconBlue)" opacity="0.92"/>
+    <!-- Book icon -->
+    <rect x="113" y="178" width="28" height="32" rx="3" fill="white" opacity="0.9"/>
+    <line x1="118" y1="186" x2="136" y2="186" stroke="#0e7490" stroke-width="2" stroke-linecap="round"/>
+    <line x1="118" y1="192" x2="136" y2="192" stroke="#0e7490" stroke-width="2" stroke-linecap="round"/>
+    <line x1="118" y1="198" x2="130" y2="198" stroke="#0e7490" stroke-width="2" stroke-linecap="round"/>
+    <!-- Book spine -->
+    <rect x="113" y="178" width="5" height="32" rx="2" fill="#0e7490" opacity="0.3"/>
+  </g>
+
+  <!-- Card: Analytics / Bar chart (top-right) — green/teal -->
+  <g filter="url(#shadow)">
+    <rect x="368" y="148" width="58" height="58" rx="16" fill="url(#iconGreen)" opacity="0.92"/>
+    <!-- Bar chart icon -->
+    <rect x="380" y="185" width="8" height="10" rx="2" fill="white" opacity="0.85"/>
+    <rect x="392" y="178" width="8" height="17" rx="2" fill="white" opacity="0.95"/>
+    <rect x="404" y="172" width="8" height="23" rx="2" fill="white" opacity="0.85"/>
+    <!-- Arrow up -->
+    <path d="M408 165 L412 170 L416 165" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="412" y1="165" x2="412" y2="172" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Card: Lightning / Quiz (left-mid) — purple -->
+  <g filter="url(#shadow)">
+    <rect x="78" y="285" width="56" height="56" rx="16" fill="url(#iconPurple1)" opacity="0.92"/>
+    <!-- Lightning bolt icon -->
+    <path d="M108 298 L100 316 L107 316 L104 332 L114 314 L107 314 L110 298Z" fill="white" opacity="0.92"/>
+  </g>
+
+  <!-- Card: Goal / Target (right-mid) — purple2 -->
+  <g filter="url(#shadow)">
+    <rect x="388" y="280" width="58" height="58" rx="16" fill="url(#iconPurple2)" opacity="0.92"/>
+    <!-- Target/goal icon -->
+    <circle cx="417" cy="309" r="17" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+    <circle cx="417" cy="309" r="11" stroke="white" stroke-width="2" fill="none" opacity="0.7"/>
+    <circle cx="417" cy="309" r="5" fill="white" opacity="0.9"/>
+    <!-- Arrow hitting target -->
+    <line x1="430" y1="296" x2="420" y2="307" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <polygon points="428,294 434,294 432,300" fill="white"/>
+  </g>
+
+  <!-- Card: Brain / Knowledge (bottom-right) — blue2 -->
+  <g filter="url(#shadow)">
+    <rect x="382" y="368" width="54" height="54" rx="16" fill="#60a5fa" opacity="0.88"/>
+    <!-- Brain/head with gear icon -->
+    <circle cx="409" cy="390" r="14" fill="white" opacity="0.25"/>
+    <circle cx="409" cy="390" r="9" stroke="white" stroke-width="2" fill="none"/>
+    <!-- Gear teeth simplified -->
+    <circle cx="409" cy="381" r="2" fill="white"/>
+    <circle cx="409" cy="399" r="2" fill="white"/>
+    <circle cx="400" cy="390" r="2" fill="white"/>
+    <circle cx="418" cy="390" r="2" fill="white"/>
+    <!-- Center -->
+    <circle cx="409" cy="390" r="4" fill="white" opacity="0.9"/>
+  </g>
+</svg>

@@ -289,45 +289,60 @@ export default function RegisterPage() {
 
   // ─── Step labels ──────────────────────────────────────────────────────────
   const stepLabel =
-    step === "role"          ? "Choose your role" :
+    step === "role"          ? "Create your account" :
     step === "subtype"       ? selectedRole === "student" ? "How would you like to learn?" : "How would you like to work?" :
     step === "select_target" ? studentSubType === "mentor_based" ? "Select a mentor" : "Select an organization" :
-    "Create your account";
+    "Almost there";
+
+  const stepDesc =
+    step === "role"          ? "Choose how you want to use SkillPath" :
+    step === "subtype"       ? "Select your learning or working preference" :
+    step === "select_target" ? "Choose from the available options below" :
+    "Fill in your account details";
 
   // ─── Shared left panel ────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen flex bg-surface-2">
+    <div className="min-h-screen flex bg-gradient-to-br from-slate-50 via-blue-50/30 to-brand-50/30">
       {/* Left */}
-      <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-brand-950 via-brand-900 to-slate-900 p-12 flex-col justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-            <Sparkles size={16} className="text-white" />
+      <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-brand-600 via-violet-600 to-blue-600 p-12 flex-col justify-between relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/8 blur-2xl" />
+          <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-white/8 blur-2xl" />
+        </div>
+        <Link href="/" className="flex items-center gap-2 relative">
+          <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
+            <Sparkles size={15} className="text-white" />
           </div>
-          <span className="text-white font-bold text-base">SkillPath AI</span>
+          <span className="text-white font-bold text-sm">SkillPath</span>
         </Link>
-        <div>
+        <div className="relative">
           <h2 className="text-3xl font-bold text-white leading-tight mb-4">
-            Your journey starts here.
-            <br />
-            <span className="text-brand-400">Learn smarter.</span>
+            Your journey starts here.<br />
+            <span className="text-white/70">Learn smarter.</span>
           </h2>
-          <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+          <p className="text-white/60 text-sm leading-relaxed max-w-sm">
             Join thousands of learners and professionals building their skills with AI-powered guidance.
           </p>
         </div>
-        <p className="text-slate-600 text-xs">© {new Date().getFullYear()} SkillPath AI</p>
+        <p className="text-white/30 text-xs relative">© {new Date().getFullYear()} SkillPath</p>
       </div>
 
       {/* Right */}
       <div className="flex-1 flex items-start justify-center p-6 overflow-y-auto">
         <div className="w-full max-w-lg py-8">
           {/* Mobile logo */}
-          <Link href="/" className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-              <Sparkles size={16} className="text-white" />
+          <Link href="/" className="flex items-center gap-2 mb-6 lg:hidden">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-600 to-blue-500 flex items-center justify-center">
+              <Sparkles size={15} className="text-white" />
             </div>
-            <span className="font-bold text-text-primary">SkillPath AI</span>
+            <span className="font-bold text-text-primary">SkillPath</span>
           </Link>
+
+          {/* Step header */}
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-text-primary">{stepLabel}</h1>
+            <p className="text-text-secondary text-sm mt-1">{stepDesc}</p>
+          </div>
 
           {/* Back button */}
           {step !== "role" && (
@@ -342,18 +357,13 @@ export default function RegisterPage() {
                   else setStep("select_target");
                 }
               }}
-              className="flex items-center gap-1 text-sm text-text-muted hover:text-text-primary mb-4 transition-colors"
+              className="flex items-center gap-1.5 text-sm text-text-muted hover:text-brand-600 mb-5 transition-colors font-medium"
             >
               <ChevronLeft size={15} /> Back
             </button>
           )}
 
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-text-primary">{stepLabel}</h1>
-            {step === "role" && (
-              <p className="text-text-secondary text-sm mt-1">Set up your profile in under a minute</p>
-            )}
-          </div>
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-lg p-7 space-y-4">
 
           {/* ── STEP: Role ── */}
           {step === "role" && (
@@ -377,9 +387,9 @@ export default function RegisterPage() {
                   </div>
                 </button>
               ))}
-              <p className="text-center text-sm text-text-secondary mt-4">
+              <p className="text-center text-sm text-text-secondary pt-1">
                 Already have an account?{" "}
-                <Link href="/login" className="text-brand-600 font-medium hover:text-brand-700 transition-colors">
+                <Link href="/login" className="text-brand-600 font-semibold hover:text-brand-700 transition-colors">
                   Sign in
                 </Link>
               </p>
@@ -584,13 +594,14 @@ export default function RegisterPage() {
           )}
 
           {step !== "role" && (
-            <p className="text-center text-sm text-text-secondary mt-6">
+            <p className="text-center text-sm text-text-secondary mt-5">
               Already have an account?{" "}
-              <Link href="/login" className="text-brand-600 font-medium hover:text-brand-700 transition-colors">
+              <Link href="/login" className="text-brand-600 font-semibold hover:text-brand-700 transition-colors">
                 Sign in
               </Link>
             </p>
           )}
+        </div>
         </div>
       </div>
     </div>
