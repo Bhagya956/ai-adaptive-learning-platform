@@ -321,7 +321,7 @@ export default function QuizPage() {
                         isSelected ? "border-brand-600" : "border-slate-300"].join(" ")}>
                         {isSelected && <div className="w-2 h-2 rounded-full bg-brand-600" />}
                       </div>
-                      <span className="text-sm">{option}</span>
+                      <span className="text-sm break-words min-w-0">{option}</span>
                     </label>
                   );
                 })}

@@ -132,8 +132,8 @@ export default function EducatorAssessmentsPage() {
 
                 {/* Expanded: per-learner results */}
                 {isOpen && (
-                  <div className="mt-4 pt-4 border-t border-border">
-                    <table className="w-full text-sm">
+                  <div className="mt-4 pt-4 border-t border-border overflow-x-auto">
+                    <table className="w-full text-sm min-w-[480px]">
                       <thead>
                         <tr className="text-left">
                           <th className="text-xs font-semibold text-text-muted uppercase tracking-wide pb-2">Student</th>

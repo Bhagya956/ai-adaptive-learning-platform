@@ -18,7 +18,7 @@ const features = [
   { icon: BarChart2, title: "Learning Analytics",   desc: "Track completion rates, activity patterns, and progress over time.",      bg: "bg-emerald-50", text: "text-emerald-600" },
   { icon: FileText,  title: "Resume Analysis",      desc: "Score your resume, identify gaps, and receive improvement suggestions.",  bg: "bg-amber-50",   text: "text-amber-600"   },
   { icon: Map,       title: "Career Roadmap",       desc: "Generate a personalised step-by-step career development plan.",          bg: "bg-indigo-50",  text: "text-indigo-600"  },
-  { icon: Mic2,      title: "Mock Interview",       desc: "Practise with role-specific questions across beginner to experienced.",   bg: "bg-pink-50",    text: "text-pink-600"    },
+  { icon: Mic2,      title: "Mock Interview",       desc: "Practice with role-specific questions across beginner to experienced.",   bg: "bg-pink-50",    text: "text-pink-600"    },
   { icon: Layers,    title: "Learning Resources",   desc: "Curated documentation, videos, courses, and project ideas per topic.",   bg: "bg-cyan-50",    text: "text-cyan-600"    },
 ];
 

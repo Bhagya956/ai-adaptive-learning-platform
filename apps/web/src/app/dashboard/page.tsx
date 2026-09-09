@@ -17,7 +17,6 @@ import Badge from "@/src/components/ui/Badge";
 import Button from "@/src/components/ui/Button";
 import ProgressBar from "@/src/components/ui/ProgressBar";
 import { PageLoader, Skeleton } from "@/src/components/ui/LoadingSpinner";
-import Link2 from "next/link";
 
 const quickActions = [
   { label: "Career Roadmap",   href: "/roadmap",                  icon: Map,      grad: "from-indigo-500 to-blue-400",     bg: "bg-indigo-50",   text: "text-indigo-600"  },
@@ -148,7 +147,7 @@ export default function DashboardPage() {
           { title: "Roadmaps",       value: stats?.roadmaps ?? 0,   icon: Map,      color: "text-indigo-600", bg: "bg-indigo-50", href: "/roadmap/history"  },
           { title: "Resume Reports", value: stats?.resumes ?? 0,    icon: FileText, color: "text-blue-600",   bg: "bg-blue-50",   href: "/resume/history"   },
           { title: "Skill Reports",  value: stats?.skillGaps ?? 0,  icon: Target,   color: "text-rose-600",   bg: "bg-rose-50",   href: "/skill-gap/history"},
-          { title: "Interviews",     value: stats?.interviews ?? 0, icon: Mic2,     color: "text-emerald-600",bg: "bg-emerald-50",href: "/mock-interview"   },
+          { title: "Interview Prep",  value: stats?.interviews ?? 0, icon: Mic2,     color: "text-emerald-600",bg: "bg-emerald-50",href: "/interview-prep/history"},
         ].map((s) => (
           <Link key={s.title} href={s.href}>
             <div className="bg-white rounded-2xl border border-slate-100 p-4 hover:shadow-md hover:border-brand-100 transition-all group">

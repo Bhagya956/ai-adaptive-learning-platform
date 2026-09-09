@@ -112,7 +112,7 @@ export default function LearningAnalyticsPage() {
               <Lightbulb size={18} className="text-brand-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-text-primary mb-1 text-sm">AI Learning Insight</h3>
+              <h3 className="font-semibold text-text-primary mb-1 text-sm">Learning Insight</h3>
               <p className="text-sm text-text-secondary leading-relaxed">{analytics.insight}</p>
             </div>
           </div>

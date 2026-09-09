@@ -38,7 +38,7 @@ export default function MockInterviewPage() {
 
   const generateInterview = async () => {
     if (!role.trim()) {
-      toast.warning("Role required", "Enter the job role you want to practise for.");
+      toast.warning("Role required", "Enter the job role you want to practice for.");
       return;
     }
     setLoading(true);
@@ -93,7 +93,7 @@ export default function MockInterviewPage() {
           Mock Interview
         </h1>
         <p className="text-text-secondary text-sm mt-1">
-          Practise interview questions for any role and get detailed feedback
+          Practice interview questions for any role and get detailed feedback
         </p>
       </div>
 

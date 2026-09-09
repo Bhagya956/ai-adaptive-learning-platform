@@ -53,7 +53,7 @@ export default function RoadmapHistoryPage() {
         <EmptyState
           icon={Map}
           title="No roadmaps yet"
-          description="Generate your first AI career roadmap."
+          description="Generate your first career roadmap."
           action={{ label: "Generate Roadmap", onClick: () => window.location.href = "/roadmap" }}
         />
       ) : (

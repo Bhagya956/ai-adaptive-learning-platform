@@ -121,11 +121,11 @@ export default function AssignmentsPage() {
                   </div>
 
                   {/* Mentor selector */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <select
                       value={selectedMentorId}
                       onChange={(e) => setSelections((prev) => ({ ...prev, [s._id]: e.target.value }))}
-                      className="text-sm border border-border rounded-lg px-3 py-2 bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="text-sm border border-border rounded-xl px-3 py-2 bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-400" aria-label="Select mentor"
                     >
                       <option value="">— Select mentor —</option>
                       {mentors.map((m) => (

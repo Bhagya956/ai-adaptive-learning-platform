@@ -84,7 +84,7 @@ export default function ProfilePage() {
         <div>
           <h1 className="text-2xl font-bold text-text-primary">My Profile</h1>
           <p className="text-text-secondary text-sm mt-1">
-            Keep your profile up to date for better AI recommendations
+            Keep your profile up to date for better personalised recommendations
           </p>
         </div>
         <Button onClick={updateProfile} loading={saving} leftIcon={<Save size={15} />}>
@@ -165,7 +165,7 @@ export default function ProfilePage() {
         <CardHeader>
           <CardTitle>Skills</CardTitle>
           <p className="text-sm text-text-secondary mt-0.5">
-            AI uses your skills for personalized recommendations
+            Your skills are used for personalised recommendations
           </p>
         </CardHeader>
         <div className="flex gap-2 mb-4">

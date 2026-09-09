@@ -101,7 +101,7 @@ export default function JobReadinessPage() {
             Job Readiness Score
           </h1>
           <p className="text-text-secondary text-sm mt-1">
-            AI evaluates your profile, skills, and activity to score your career readiness
+            Your profile, skills, and activity are used to score your career readiness
           </p>
         </div>
         {/* <Button onClick={generateScore} loading={generating} leftIcon={<Sparkles size={14} />}>

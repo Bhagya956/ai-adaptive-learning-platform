@@ -35,7 +35,7 @@ export default function ProjectRecommendationPage() {
       const response = await api.post("/project-recommendation");
       setLatestRec(response.data);
       fetchHistory();
-      toast.success("Projects generated!", "AI has recommended projects based on your profile.");
+      toast.success("Projects generated!", "Projects recommended based on your profile.");
     } catch {
       toast.error("Generation failed", "Could not generate project recommendations.");
     } finally {
@@ -64,7 +64,7 @@ export default function ProjectRecommendationPage() {
         <div>
           <h1 className="text-2xl font-bold text-text-primary flex items-center gap-2">
             <FolderKanban size={22} className="text-violet-600" />
-            AI Project Recommendations
+            Project Recommendations
           </h1>
           <p className="text-text-secondary text-sm mt-1">
             Build real-world projects to strengthen your portfolio and close skill gaps
@@ -75,7 +75,7 @@ export default function ProjectRecommendationPage() {
         </Button>
       </div>
 
-      {generating && <InlineLoader message="AI is finding the best projects for you…" />}
+      {generating && <InlineLoader message="Finding the best projects for you…" />}
 
       {latestRec ? (
         <div className="space-y-4">
@@ -124,7 +124,7 @@ export default function ProjectRecommendationPage() {
           </div>
           <h2 className="text-lg font-semibold text-text-primary mb-2">No recommendations yet</h2>
           <p className="text-text-secondary text-sm max-w-sm mx-auto mb-6">
-            Generate AI project recommendations based on your career goals and current skills.
+            Generate project recommendations based on your career goals and current skills.
           </p>
           <Button onClick={generateRecommendations} loading={generating} leftIcon={<Sparkles size={14} />}>
             Generate Projects

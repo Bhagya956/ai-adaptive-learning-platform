@@ -321,7 +321,7 @@ export default function RegisterPage() {
             <span className="text-white/70">Learn smarter.</span>
           </h2>
           <p className="text-white/60 text-sm leading-relaxed max-w-sm">
-            Join thousands of learners and professionals building their skills with AI-powered guidance.
+            Join thousands of learners and professionals building their skills with intelligent guidance.
           </p>
         </div>
         <p className="text-white/30 text-xs relative">© {new Date().getFullYear()} SkillPath</p>
@@ -464,7 +464,7 @@ export default function RegisterPage() {
                       placeholder={studentSubType === "mentor_based" ? "Search mentors…" : "Search organizations…"}
                       value={targetSearch}
                       onChange={(e) => setTargetSearch(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 text-sm border border-border rounded-lg bg-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="w-full pl-9 pr-3 py-2.5 text-sm border border-border rounded-xl bg-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-500"
                     />
                   </div>
                   <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
@@ -519,7 +519,7 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
               {/* Context reminder */}
               {selectedTarget && (
-                <div className="flex items-center gap-2 px-3 py-2.5 bg-surface-3 rounded-lg border border-border text-sm">
+                <div className="flex items-center gap-2 px-3 py-2.5 bg-surface-3 rounded-xl border border-border text-sm">
                   <CheckCircle2 size={15} className="text-success shrink-0" />
                   <span className="text-text-secondary">
                     {studentSubType === "mentor_based" ? "Mentor: " : "Organization: "}
@@ -529,7 +529,7 @@ export default function RegisterPage() {
                 </div>
               )}
               {(studentSubType === "independent" || educatorSubType === "independent") && (
-                <div className="flex items-center gap-2 px-3 py-2.5 bg-success-bg rounded-lg border border-green-200 text-sm">
+                <div className="flex items-center gap-2 px-3 py-2.5 bg-success-bg rounded-xl border border-green-200 text-sm">
                   <CheckCircle2 size={15} className="text-success shrink-0" />
                   <span className="text-text-secondary">
                     Independent — your account will be <strong>active immediately</strong> after signup.
@@ -537,7 +537,7 @@ export default function RegisterPage() {
                 </div>
               )}
               {selectedRole === "organization" && (
-                <div className="flex items-center gap-2 px-3 py-2.5 bg-success-bg rounded-lg border border-green-200 text-sm">
+                <div className="flex items-center gap-2 px-3 py-2.5 bg-success-bg rounded-xl border border-green-200 text-sm">
                   <CheckCircle2 size={15} className="text-success shrink-0" />
                   <span className="text-text-secondary">
                     Organization account — active immediately after signup.
@@ -558,7 +558,7 @@ export default function RegisterPage() {
                   <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
                   <input type={showPassword ? "text" : "password"} placeholder="Min. 6 characters"
                     autoComplete="new-password"
-                    className={["w-full rounded-lg border bg-surface text-text-primary placeholder:text-text-muted text-sm transition-colors duration-150 pl-9 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500",
+                    className={["w-full rounded-xl border bg-surface text-text-primary placeholder:text-text-muted text-sm transition-colors duration-150 pl-9 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400",
                       errors.password ? "border-danger" : "border-border hover:border-slate-300"].join(" ")}
                     {...register("password")} />
                   <button type="button" onClick={() => setShowPassword((v) => !v)}
@@ -576,7 +576,7 @@ export default function RegisterPage() {
                   <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
                   <input type={showConfirm ? "text" : "password"} placeholder="Repeat your password"
                     autoComplete="new-password"
-                    className={["w-full rounded-lg border bg-surface text-text-primary placeholder:text-text-muted text-sm transition-colors duration-150 pl-9 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500",
+                    className={["w-full rounded-xl border bg-surface text-text-primary placeholder:text-text-muted text-sm transition-colors duration-150 pl-9 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400",
                       errors.confirmPassword ? "border-danger" : "border-border hover:border-slate-300"].join(" ")}
                     {...register("confirmPassword")} />
                   <button type="button" onClick={() => setShowConfirm((v) => !v)}

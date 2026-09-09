@@ -100,7 +100,7 @@ export default function ResumePage() {
             Resume Analyzer
           </h1>
           <p className="text-text-secondary text-sm mt-1">
-            Upload your resume and get an AI-powered ATS score with improvement suggestions
+            Upload your resume and get an ATS score with improvement suggestions
           </p>
         </div>
         <Link href="/resume/history">

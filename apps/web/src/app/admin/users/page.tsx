@@ -88,6 +88,7 @@ export default function AdminUsersPage() {
   const [studentFilter, setStudentFilter] = useState<StudentFilter>("all");
   const [search, setSearch] = useState("");
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   // ── Fetch ────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -110,11 +111,11 @@ export default function AdminUsersPage() {
   };
 
   const deleteUser = async (userId: string) => {
-    if (!window.confirm("Permanently delete this user?")) return;
     try {
       await api.delete(`/admin/users/${userId}`);
       toast.success("User deleted", "The user has been removed.");
       if (selectedUser?._id === userId) setSelectedUser(null);
+      setConfirmDeleteId(null);
       // Refetch
       const r = await api.get("/admin/users/structured");
       setStructured(r.data);
@@ -184,7 +185,7 @@ export default function AdminUsersPage() {
 
       {/* Tabs + search */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-        <div className="flex gap-1 bg-slate-100 rounded-xl p-1">
+        <div className="flex flex-wrap gap-1 bg-slate-100 rounded-xl p-1">
           {(["students", "educators", "organizations"] as MainTab[]).map((t) => (
             <button key={t} onClick={() => { setTab(t); setSearch(""); setStudentFilter("all"); setSelectedUser(null); }}
               className={["px-4 py-1.5 rounded-lg text-sm font-medium capitalize transition-all",
@@ -198,7 +199,7 @@ export default function AdminUsersPage() {
             leftIcon={<Search size={14} />} />
         </div>
         {tab === "students" && (
-          <div className="flex gap-1 bg-slate-100 rounded-xl p-1 text-xs">
+          <div className="flex flex-wrap gap-1 bg-slate-100 rounded-xl p-1 text-xs">
             {(["all", "independent", "educator", "organization"] as StudentFilter[]).map((f) => {
               const labels: Record<StudentFilter, string> = {
                 all: "All", independent: "Independent", educator: "Educator-Linked", organization: "Org"
@@ -280,8 +281,15 @@ export default function AdminUsersPage() {
                         <td className="px-5 py-3.5">
                           <div className="flex items-center justify-end gap-1.5">
                             <Button variant="ghost" size="sm" onClick={() => viewUser(s._id)} leftIcon={<Eye size={13} />}>View</Button>
-                            <Button variant="ghost" size="sm" onClick={() => deleteUser(s._id)}
-                              className="text-danger hover:bg-danger-bg" leftIcon={<Trash2 size={13} />}>Delete</Button>
+                            {confirmDeleteId === s._id ? (
+                              <span className="flex items-center gap-1">
+                                <Button size="sm" variant="danger" onClick={() => deleteUser(s._id)}>Confirm</Button>
+                                <Button size="sm" variant="ghost" onClick={() => setConfirmDeleteId(null)}>Cancel</Button>
+                              </span>
+                            ) : (
+                              <Button variant="ghost" size="sm" onClick={() => setConfirmDeleteId(s._id)}
+                                className="text-danger hover:bg-danger-bg" leftIcon={<Trash2 size={13} />}>Delete</Button>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -346,8 +354,15 @@ export default function AdminUsersPage() {
                         <td className="px-5 py-3.5">
                           <div className="flex items-center justify-end gap-1.5">
                             <Button variant="ghost" size="sm" onClick={() => viewUser(e._id)} leftIcon={<Eye size={13} />}>View</Button>
-                            <Button variant="ghost" size="sm" onClick={() => deleteUser(e._id)}
-                              className="text-danger hover:bg-danger-bg" leftIcon={<Trash2 size={13} />}>Delete</Button>
+                            {confirmDeleteId === e._id ? (
+                              <span className="flex items-center gap-1">
+                                <Button size="sm" variant="danger" onClick={() => deleteUser(e._id)}>Confirm</Button>
+                                <Button size="sm" variant="ghost" onClick={() => setConfirmDeleteId(null)}>Cancel</Button>
+                              </span>
+                            ) : (
+                              <Button variant="ghost" size="sm" onClick={() => setConfirmDeleteId(e._id)}
+                                className="text-danger hover:bg-danger-bg" leftIcon={<Trash2 size={13} />}>Delete</Button>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -371,9 +386,14 @@ export default function AdminUsersPage() {
                 const isExpanded = expandedOrg === o._id;
                 return (
                   <Card key={o._id}>
-                    {/* Org header row */}
-                    <div className="flex items-center gap-4 cursor-pointer"
-                      onClick={() => setExpandedOrg(isExpanded ? null : o._id)}>
+                    {/* Org header row — button for keyboard/screen-reader accessibility */}
+                    <button
+                      type="button"
+                      className="flex items-center gap-4 w-full text-left"
+                      onClick={() => setExpandedOrg(isExpanded ? null : o._id)}
+                      aria-expanded={isExpanded}
+                      aria-label={`${isExpanded ? "Collapse" : "Expand"} ${o.name}`}
+                    >
                       <Initials name={o.name} bg="from-violet-400 to-violet-600" />
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-text-primary">{o.name}</p>
@@ -391,7 +411,7 @@ export default function AdminUsersPage() {
                           leftIcon={<Eye size={13} />}>View</Button>
                         {isExpanded ? <ChevronUp size={16} className="text-text-muted" /> : <ChevronDown size={16} className="text-text-muted" />}
                       </div>
-                    </div>
+                    </button>
 
                     {/* Expandable relationship view */}
                     {isExpanded && (
@@ -497,10 +517,22 @@ export default function AdminUsersPage() {
               )}
 
               <div className="mt-4 pt-4 border-t border-border">
-                <Button variant="danger" size="sm" className="w-full"
-                  onClick={() => deleteUser(selectedUser._id)} leftIcon={<Trash2 size={13} />}>
-                  Delete User
-                </Button>
+                {confirmDeleteId === selectedUser._id ? (
+                  <div className="flex gap-2">
+                    <Button variant="danger" size="sm" className="flex-1"
+                      onClick={() => deleteUser(selectedUser._id)} leftIcon={<Trash2 size={13} />}>
+                      Confirm Delete
+                    </Button>
+                    <Button variant="secondary" size="sm" onClick={() => setConfirmDeleteId(null)}>
+                      Cancel
+                    </Button>
+                  </div>
+                ) : (
+                  <Button variant="danger" size="sm" className="w-full"
+                    onClick={() => setConfirmDeleteId(selectedUser._id)} leftIcon={<Trash2 size={13} />}>
+                    Delete User
+                  </Button>
+                )}
               </div>
             </Card>
           </div>

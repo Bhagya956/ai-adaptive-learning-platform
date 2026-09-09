@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -52,13 +53,13 @@ export default function AdminPage() {
     value: count,
   }));
 
-  const statCards = [
-    { title: "Total Users",        value: analytics?.totalUsers ?? 0,                  icon: Users,    color: "text-brand-600",   bg: "bg-brand-50",    href: "/admin/users"    },
-    { title: "Roadmaps",           value: analytics?.totalRoadmaps ?? 0,               icon: Map,      color: "text-indigo-600",  bg: "bg-indigo-50",   href: undefined         },
-    { title: "Resume Analyses",    value: analytics?.totalResumeAnalyses ?? 0,         icon: FileText, color: "text-blue-600",    bg: "bg-blue-50",     href: undefined         },
-    { title: "Skill Gap Reports",  value: analytics?.totalSkillGapAnalyses ?? 0,       icon: Target,   color: "text-rose-600",    bg: "bg-rose-50",     href: undefined         },
-    { title: "Interview Guides",   value: analytics?.totalInterviewPreparations ?? 0,  icon: Mic2,     color: "text-emerald-600", bg: "bg-emerald-50",  href: undefined         },
-    { title: "Learning Tasks",     value: analytics?.totalLearningTasks ?? 0,          icon: BookOpen, color: "text-amber-600",   bg: "bg-amber-50",    href: undefined         },
+  const statCards: { title: string; value: number; icon: React.ElementType; color: string; bg: string; href: string }[] = [
+    { title: "Total Users",        value: analytics?.totalUsers ?? 0,                  icon: Users,    color: "text-brand-600",   bg: "bg-brand-50",    href: "/admin/users"     },
+    { title: "Roadmaps",           value: analytics?.totalRoadmaps ?? 0,               icon: Map,      color: "text-indigo-600",  bg: "bg-indigo-50",   href: "/admin/analytics" },
+    { title: "Resume Analyses",    value: analytics?.totalResumeAnalyses ?? 0,         icon: FileText, color: "text-blue-600",    bg: "bg-blue-50",     href: "/admin/analytics" },
+    { title: "Skill Gap Reports",  value: analytics?.totalSkillGapAnalyses ?? 0,       icon: Target,   color: "text-rose-600",    bg: "bg-rose-50",     href: "/admin/analytics" },
+    { title: "Interview Guides",   value: analytics?.totalInterviewPreparations ?? 0,  icon: Mic2,     color: "text-emerald-600", bg: "bg-emerald-50",  href: "/admin/analytics" },
+    { title: "Learning Tasks",     value: analytics?.totalLearningTasks ?? 0,          icon: BookOpen, color: "text-amber-600",   bg: "bg-amber-50",    href: "/admin/analytics" },
   ];
 
   return (
@@ -85,35 +86,21 @@ export default function AdminPage() {
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-        {statCards.map((s) =>
-          s.href ? (
-            <Link key={s.title} href={s.href}>
-              <div className="bg-white rounded-2xl border border-slate-100 p-4 hover:shadow-md hover:border-brand-100 transition-all group">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-text-muted font-medium mb-1">{s.title}</p>
-                    <p className="text-2xl font-bold text-text-primary">{s.value}</p>
-                  </div>
-                  <div className={`p-2.5 rounded-xl ${s.bg} ${s.color} group-hover:scale-105 transition-transform`}>
-                    <s.icon size={16} />
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ) : (
-            <div key={s.title} className="bg-white rounded-2xl border border-slate-100 p-4 shadow-sm">
+        {statCards.map((s) => (
+          <Link key={s.title} href={s.href}>
+            <div className="bg-white rounded-2xl border border-slate-100 p-4 hover:shadow-md hover:border-brand-100 transition-all group">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs text-text-muted font-medium mb-1">{s.title}</p>
                   <p className="text-2xl font-bold text-text-primary">{s.value}</p>
                 </div>
-                <div className={`p-2.5 rounded-xl ${s.bg} ${s.color}`}>
+                <div className={`p-2.5 rounded-xl ${s.bg} ${s.color} group-hover:scale-105 transition-transform`}>
                   <s.icon size={16} />
                 </div>
               </div>
             </div>
-          )
-        )}
+          </Link>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

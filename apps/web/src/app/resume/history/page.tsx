@@ -40,7 +40,7 @@ export default function ResumeHistoryPage() {
         <EmptyState
           icon={FileText}
           title="No analyses yet"
-          description="Upload your resume to get your first AI analysis."
+          description="Upload your resume to get your first analysis."
           action={{ label: "Analyze Resume", onClick: () => window.location.href = "/resume" }}
         />
       ) : (

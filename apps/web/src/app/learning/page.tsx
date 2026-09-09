@@ -120,6 +120,7 @@ export default function LearningPage() {
   const [activeTab, setActiveTab] = useState<DisplayStatus>("open");
   const [showCreate, setShowCreate] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   // Create form
   const [newTitle, setNewTitle]       = useState("");
@@ -170,10 +171,10 @@ export default function LearningPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Delete this task?")) return;
     try {
       await deleteTask(id);
       toast.success("Deleted", "Task removed.");
+      setConfirmDeleteId(null);
       loadTasks();
     } catch {
       toast.error("Delete failed", "Could not delete task.");
@@ -239,7 +240,7 @@ export default function LearningPage() {
                   type="date"
                   value={newDueDate}
                   onChange={(e) => setNewDueDate(e.target.value)}
-                  className="w-full rounded-lg border border-border bg-surface text-text-primary text-sm px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full rounded-xl border border-border bg-surface text-text-primary text-sm px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-400"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -248,7 +249,7 @@ export default function LearningPage() {
                   type="time"
                   value={newDueTime}
                   onChange={(e) => setNewDueTime(e.target.value)}
-                  className="w-full rounded-lg border border-border bg-surface text-text-primary text-sm px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full rounded-xl border border-border bg-surface text-text-primary text-sm px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-400"
                 />
               </div>
             </div>
@@ -386,12 +387,31 @@ export default function LearningPage() {
                             Complete
                           </Button>
                         )}
-                        <button onClick={() => handleDelete(task._id)}
-                          className="p-1 rounded text-text-muted hover:text-danger hover:bg-danger-bg transition-colors"
-                          title="Delete task">
-                          <Trash2 size={13} />
-                        </button>
-                      </div>
+                        {confirmDeleteId === task._id ? (
+                          <span className="flex items-center gap-1">
+                            <button
+                              onClick={() => handleDelete(task._id)}
+                              className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-danger text-white hover:bg-red-600 transition-colors"
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={() => setConfirmDeleteId(null)}
+                              className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-surface-3 text-text-secondary hover:bg-surface-4 transition-colors"
+                            >
+                              Cancel
+                            </button>
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => setConfirmDeleteId(task._id)}
+                            className="p-1 rounded text-text-muted hover:text-danger hover:bg-danger-bg transition-colors"
+                            title="Delete task"
+                            aria-label={`Delete task: ${task.title}`}
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        )}                      </div>
                     </div>
 
                     {/* Metadata row */}

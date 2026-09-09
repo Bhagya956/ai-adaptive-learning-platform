@@ -95,7 +95,7 @@ export default function PortfolioAnalyzerPage() {
         </div>
       </Card>
 
-      {analyzing && <InlineLoader message="Fetching GitHub data and running AI analysis…" />}
+      {analyzing && <InlineLoader message="Fetching GitHub data and analyzing portfolio…" />}
 
       {/* Analysis results */}
       {analysis && !analyzing && (
@@ -190,7 +190,7 @@ export default function PortfolioAnalyzerPage() {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <Sparkles size={16} className="text-brand-600" />
-                  <CardTitle>AI Portfolio Summary</CardTitle>
+                  <CardTitle>Portfolio Summary</CardTitle>
                 </div>
               </CardHeader>
               <p className="text-sm text-text-secondary leading-relaxed">{analysis.analysis}</p>
@@ -222,12 +222,12 @@ export default function PortfolioAnalyzerPage() {
 
       {!analysis && !analyzing && (
         <Card className="text-center py-16">
-          <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-5">
-            <GitBranch size={32} className="text-slate-600" />
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-50 to-blue-50 flex items-center justify-center mx-auto mb-5">
+            <GitBranch size={32} className="text-brand-600" />
           </div>
           <h2 className="text-lg font-semibold text-text-primary mb-2">Analyze a GitHub portfolio</h2>
           <p className="text-text-secondary text-sm max-w-sm mx-auto">
-            Enter a GitHub username above to get an AI-powered analysis of their repositories and skills.
+            Enter a GitHub username above to get an analysis of their repositories and skills.
           </p>
         </Card>
       )}

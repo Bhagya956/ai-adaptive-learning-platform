@@ -21,11 +21,11 @@ export default function LoadingSpinner({ size = "md", className = "" }: SpinnerP
 
 export function PageLoader({ message = "Loading..." }: { message?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" role="status" aria-label={message}>
       <div className="relative">
-        <div className="w-12 h-12 rounded-full border-3 border-brand-100 border-t-brand-500 animate-spin" />
+        <div className="w-12 h-12 rounded-full border-3 border-brand-100 border-t-brand-500 animate-spin" aria-hidden="true" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-5 h-5 rounded-full bg-gradient-to-br from-brand-400 to-blue-400 opacity-30 animate-pulse" />
+          <div className="w-5 h-5 rounded-full bg-gradient-to-br from-brand-400 to-blue-400 opacity-30 animate-pulse" aria-hidden="true" />
         </div>
       </div>
       <p className="text-sm text-text-muted font-medium">{message}</p>
@@ -35,7 +35,7 @@ export function PageLoader({ message = "Loading..." }: { message?: string }) {
 
 export function InlineLoader({ message }: { message?: string }) {
   return (
-    <div className="flex items-center gap-2.5 py-6 justify-center text-text-secondary">
+    <div className="flex items-center gap-2.5 py-6 justify-center text-text-secondary" role="status" aria-live="polite">
       <LoadingSpinner size="sm" />
       {message && <span className="text-sm">{message}</span>}
     </div>

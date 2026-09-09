@@ -83,7 +83,7 @@ export default function SkillGapPage() {
 
   const generateAnalysis = async () => {
     if (!targetRole.trim()) {
-      toast.warning("Target role required", "Enter the role you want to analyse skills for.");
+      toast.warning("Target role required", "Enter the role you want to analyze skills for.");
       return;
     }
     setLoading(true);
@@ -94,7 +94,7 @@ export default function SkillGapPage() {
       setRecommendations(response.data.recommendations ?? []);
       toast.success("Analysis complete!", "Your skill gap report is ready.");
     } catch {
-      toast.error("Analysis failed", "Could not analyse skills. Please try again.");
+      toast.error("Analysis failed", "Could not analyze skills. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -140,13 +140,13 @@ export default function SkillGapPage() {
             />
           </div>
           <Button onClick={generateAnalysis} loading={loading} leftIcon={<Sparkles size={14} />}>
-            {loading ? "Analysing…" : "Analyse"}
+            {loading ? "Analyzing…" : "Analyze"}
           </Button>
         </div>
       </Card>
 
       {/* Loading */}
-      {loading && <InlineLoader message="Analysing your skills against the target role…" />}
+      {loading && <InlineLoader message="Analyzing your skills against the target role…" />}
 
       {/* Empty state */}
       {!analysis && !loading && (
@@ -170,7 +170,7 @@ export default function SkillGapPage() {
               <Badge variant="default">{targetRole}</Badge>
             </div>
             <Button onClick={generateAnalysis} variant="outline" size="sm" leftIcon={<Sparkles size={13} />}>
-              Re-analyse
+              Re-analyze
             </Button>
           </div>
 

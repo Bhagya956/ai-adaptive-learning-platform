@@ -45,7 +45,7 @@ export default function QuizHistoryPage() {
         <EmptyState
           icon={Zap}
           title="No quizzes yet"
-          description="Take your first AI-generated quiz to see results here."
+          description="Take your first quiz to see results here."
           action={{ label: "Take a Quiz", onClick: () => window.location.href = "/quiz" }}
         />
       ) : (

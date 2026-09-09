@@ -94,7 +94,7 @@ export default function CreateAssessmentPage() {
           Create Assessment
         </h1>
         <p className="text-text-secondary text-sm mt-1">
-          Generate an AI quiz on any topic and assign it to your learners
+          Generate a quiz on any topic and assign it to your learners
         </p>
       </div>
 
@@ -120,7 +120,7 @@ export default function CreateAssessmentPage() {
             onChange={(e) => setTopic(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleCreate()}
             leftIcon={<Zap size={14} />}
-            hint="The AI will generate 10 questions on this topic"
+            hint="10 questions will be generated on this topic"
           />
         </div>
       </Card>
@@ -216,7 +216,7 @@ export default function CreateAssessmentPage() {
         {creating ? "Generating quiz and assigning…" : "Create & Assign Assessment"}
       </Button>
       <p className="text-xs text-text-muted text-center -mt-2">
-        The AI will generate a 10-question quiz on the specified topic and assign it to the selected learners.
+        10 questions will be generated on the specified topic and assigned to the selected learners.
       </p>
     </div>
   );

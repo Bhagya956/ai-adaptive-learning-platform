@@ -83,7 +83,7 @@ export default function InterviewPrepPage() {
             Interview Preparation
           </h1>
           <p className="text-text-secondary text-sm mt-1">
-            AI-generated interview guide with questions, tips, and strategies for any role
+            Interview preparation guide with questions, tips, and strategies for any role
           </p>
         </div>
         <Link href="/interview-prep/history">
