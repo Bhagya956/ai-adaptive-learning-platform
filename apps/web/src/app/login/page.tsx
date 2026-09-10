@@ -70,7 +70,7 @@ export default function LoginPage() {
           <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
             <Sparkles size={15} className="text-white" />
           </div>
-          <span className="text-white font-bold text-sm">SkillPath</span>
+          <span className="text-white font-bold text-sm">SkillPath AI</span>
         </Link>
         <div className="relative">
           <h2 className="text-3xl font-bold text-white leading-tight mb-4">
@@ -89,7 +89,7 @@ export default function LoginPage() {
             ))}
           </div>
         </div>
-        <p className="text-white/30 text-xs relative">© {new Date().getFullYear()} SkillPath</p>
+        <p className="text-white/30 text-xs relative">© {new Date().getFullYear()} SkillPath AI</p>
       </div>
 
       {/* Right — form */}
@@ -100,7 +100,7 @@ export default function LoginPage() {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-600 to-blue-500 flex items-center justify-center">
               <Sparkles size={15} className="text-white" />
             </div>
-            <span className="font-bold text-text-primary">SkillPath</span>
+            <span className="font-bold text-text-primary">SkillPath AI</span>
           </Link>
 
           <div className="bg-white rounded-2xl border border-slate-100 shadow-lg p-8">

@@ -136,7 +136,7 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-600 to-blue-500 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
               <Sparkles size={14} className="text-white" />
             </div>
-            <span className="text-sm font-bold text-slate-800">SkillPath</span>
+            <span className="text-sm font-bold text-slate-800">SkillPath AI</span>
           </Link>
 
           {/* Desktop nav */}
@@ -377,7 +377,7 @@ export default function LandingPage() {
                 Built for everyone
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">Your role, your experience</h2>
-              <p className="text-text-secondary text-base max-w-xl mx-auto">SkillPath supports students, educators, and organisations in one unified platform.</p>
+              <p className="text-text-secondary text-base max-w-xl mx-auto">SkillPath AI supports students, educators, and organisations in one unified platform.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -447,10 +447,10 @@ export default function LandingPage() {
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-600 to-blue-500 flex items-center justify-center">
               <Sparkles size={13} className="text-white" />
             </div>
-            <span className="text-sm font-bold text-slate-800">SkillPath</span>
+            <span className="text-sm font-bold text-slate-800">SkillPath AI</span>
           </div>
           <p className="text-xs text-text-muted text-center">
-            © {new Date().getFullYear()} SkillPath — Adaptive Learning & Career Development Platform
+            © {new Date().getFullYear()} SkillPath AI — Adaptive Learning & Career Development Platform
           </p>
           <div className="flex gap-5 text-xs text-text-muted">
             <Link href="/login"    className="hover:text-brand-600 transition-colors">Sign In</Link>

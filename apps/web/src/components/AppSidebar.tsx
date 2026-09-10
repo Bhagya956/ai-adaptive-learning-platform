@@ -265,7 +265,7 @@ export default function AppSidebar() {
           <Sparkles size={15} className="text-white" />
         </div>
         <div className="min-w-0">
-          <p className="text-sm font-bold text-slate-800 truncate leading-tight">SkillPath</p>
+          <p className="text-sm font-bold text-slate-800 truncate leading-tight">SkillPath AI</p>
           <p className="text-[10px] text-slate-400 truncate">Learning Platform</p>
         </div>
       </div>
